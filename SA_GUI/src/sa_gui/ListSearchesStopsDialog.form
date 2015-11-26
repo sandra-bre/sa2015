@@ -196,11 +196,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Back"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jbBackButtonMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JToggleButton" name="jbHomeButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Home"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jbHomeButtonMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

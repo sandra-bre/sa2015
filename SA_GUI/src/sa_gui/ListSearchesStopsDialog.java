@@ -81,8 +81,18 @@ public class ListSearchesStopsDialog extends javax.swing.JDialog {
         jlLonCriteriaChange.setText("jLabel2");
 
         jbBackButton.setText("Back");
+        jbBackButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbBackButtonMouseClicked(evt);
+            }
+        });
 
         jbHomeButton.setText("Home");
+        jbHomeButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbHomeButtonMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -151,6 +161,16 @@ public class ListSearchesStopsDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbHomeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbHomeButtonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbHomeButtonMouseClicked
+
+    private void jbBackButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbBackButtonMouseClicked
+        // TODO add your handling code here:
+        SearchStopDialog backbutton = new SearchStopDialog(this, rootPaneCheckingEnabled);
+        backbutton.setVisible(true);
+    }//GEN-LAST:event_jbBackButtonMouseClicked
 
     /**
      * @param args the command line arguments
