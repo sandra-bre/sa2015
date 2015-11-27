@@ -5,6 +5,12 @@
  */
 package sa_gui;
 
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import static sa_gui.Controller.rsstop;
+
 /**
  *
  * @author Sandra
@@ -14,9 +20,49 @@ public class ListStops extends javax.swing.JFrame {
     /**
      * Creates new form ListStops
      */
-    public ListStops() {
+    public ListStops() throws SQLException {
         initComponents();
         this.setTitle("Program - Search Stops");
+        
+        String name = Controller.getStopName();
+        double lat = Controller.getStopLat();
+        double lon = Controller.getStopLon();
+        
+        if(name == "leer")
+        { jlEnterName.setText("-"); }
+        else
+        { jlEnterName.setText(name); }
+        if(lat == 0)
+        { jlEnterLat.setText("-"); }
+        else
+        { jlEnterLat.setText(String.valueOf(lat)); }
+        if(lon == 0)
+        { jlEnterLon.setText("-"); }
+        else
+        { jlEnterLon.setText(String.valueOf(lon)); }
+        
+        // enter results to table
+        try{
+            DefaultTableModel stopmodel = new DefaultTableModel();
+            ResultSet stops = Controller.getResultStop();
+            jtStopsTable.setModel(stopmodel);
+         
+            stopmodel.addColumn("Name");
+            stopmodel.addColumn("Latitude");
+            stopmodel.addColumn("Longitude");
+        
+            while(rsstop.next()){
+                stopmodel.addRow(new Object[]{stops.getString(4), stops.getString(2), stops.getString(3)});
+            }
+        
+        } catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        
     }
 
     /**
@@ -202,7 +248,11 @@ public class ListStops extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListStops().setVisible(true);
+                try {
+                    new ListStops().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ListStops.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

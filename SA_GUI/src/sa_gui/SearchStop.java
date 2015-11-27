@@ -5,6 +5,10 @@
  */
 package sa_gui;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Sandra
@@ -152,9 +156,7 @@ public class SearchStop extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSearchButtonActionPerformed
-        // TODO add your handling code here:
-        ListStops lssdialog = new ListStops();
-        
+        // TODO add your handling code here:        
         /* get input data: */
         String tmp;
         
@@ -178,7 +180,13 @@ public class SearchStop extends javax.swing.JFrame {
         
         Controller.searchStop(nameStop, latStop, lonStop);
         
-        lssdialog.setVisible(true);
+        ListStops lssdialog;
+        try {
+            lssdialog = new ListStops();
+            lssdialog.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(SearchStop.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setVisible(false);
     }//GEN-LAST:event_jbSearchButtonActionPerformed
 

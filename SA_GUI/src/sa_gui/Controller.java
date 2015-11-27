@@ -6,6 +6,7 @@
 package sa_gui;
 
 import java.sql.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,6 +22,12 @@ public class Controller {
     static final String user = "root";
     static final String pass = "root";
     
+    // Variables
+    static ResultSet rsstop;
+    static String stopname;
+    static double stoplat;
+    static double stoplon;
+    
     /**
      * @param args the command line arguments
      */
@@ -33,6 +40,10 @@ public class Controller {
     public static void searchStop(String name, double lat, double lon){
         Connection conn = null;
         Statement stmt = null;
+                
+        stopname = name;
+        stoplat = lat;
+        stoplon = lon;
         
         try {
             //register JDBC driver
@@ -44,16 +55,29 @@ public class Controller {
             
             stmt = conn.createStatement();
             
-            String sql = "SELECT * FROM task1";
-            ResultSet rs = stmt.executeQuery(sql);
+            String sql = "SELECT * FROM task1 where ";
+            boolean bool = false;
+          
+            if (stopname != "leer")
+            {
+                sql += "name = \"" + stopname + "\"";
+                bool = true;
+            }
+            if (stoplat != 0)
+            {
+                if(bool == true) { sql += "AND "; }
+                sql += "latitude = '" + stoplat + "'";
+                bool = true;
+            }
+            if (stoplon != 0)
+            {
+                if(bool == true) { sql += "AND "; }
+                sql += "longitude = '" + stoplon + "'";
+            }
             
-            while(rs.next()){
-            for (int i = 1; i <= 2; i++) {
-        if (i > 1) System.out.print(",  ");
-        String columnName = rs.getString(i);
-        System.out.print(columnName);
-      }}
+            rsstop = stmt.executeQuery(sql);
             
+                    
         } catch(SQLException se){
             //Handle errors for JDBC
             se.printStackTrace();
@@ -63,5 +87,9 @@ public class Controller {
         }
     }
     
+    public static String getStopName() { return stopname; }
+    public static double getStopLat() { return stoplat; }
+    public static double getStopLon() { return stoplon; }
+    public static ResultSet getResultStop() { return rsstop; }
     
 }
