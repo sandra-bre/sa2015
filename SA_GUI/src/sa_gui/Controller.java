@@ -5,11 +5,7 @@
  */
 package sa_gui;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  *
@@ -17,25 +13,54 @@ import java.sql.Statement;
  */
 public class Controller {
 
-    ResultSet rs;
-    String stopquery;
+    // JDBC driver and database URL
+    static final String driver = "com.mysql.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/sa_database";
     
-    Connection con = DriverManager.getConnection("jdbc:mysql:localhost:3306:database", "root", "root") throws SQLException;
-            getConnection("jdbc:mysql://localhost:3306/database", "root", "root") throws SQLException;
-    
-    Statement stmt = con.createStatement();
+    // Database credentials
+    static final String user = "root";
+    static final String pass = "root";
     
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        Controller cont = new Controller();
+        // TODO code application logic here  
+        
+        
     }
     
-    public void searchStop(String name, double lat, double lon){
-       stopquery = "SELECT * FROM task1";
-       rs = stmt.executeQuery(stopquery);
+    public static void searchStop(String name, double lat, double lon){
+        Connection conn = null;
+        Statement stmt = null;
+        
+        try {
+            //register JDBC driver
+            //Class.forName(driver);
+            
+            //open connection
+            conn = DriverManager.getConnection(DB_URL, user, pass);
+            
+            
+            stmt = conn.createStatement();
+            
+            String sql = "SELECT * FROM task1";
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            while(rs.next()){
+            for (int i = 1; i <= 2; i++) {
+        if (i > 1) System.out.print(",  ");
+        String columnName = rs.getString(i);
+        System.out.print(columnName);
+      }}
+            
+        } catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        }
     }
     
     

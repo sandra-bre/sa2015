@@ -18,6 +18,9 @@ public class SA_GUI {
         // TODO code application logic here
         HomeWindow hw = new HomeWindow();
         hw.setVisible(true);
+        
+        
+        System.out.println("hello");
     }
     
 }
