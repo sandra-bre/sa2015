@@ -11,6 +11,10 @@ package sa_gui;
  */
 public class SearchConnection extends javax.swing.JFrame {
 
+    // Variables:
+    String conStart;
+    String conDestination;
+    
     /**
      * Creates new form SearchConnection
      */
@@ -49,10 +53,6 @@ public class SearchConnection extends javax.swing.JFrame {
 
         jlDestinationRoute.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jlDestinationRoute.setText("Destination:");
-
-        jfEnterStartRoute.setText("jTextField1");
-
-        jfEnterDestinationRoute.setText("jTextField1");
 
         jbCancelButton.setText("Cancel");
         jbCancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +131,16 @@ public class SearchConnection extends javax.swing.JFrame {
 
     private void jbSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSearchButtonActionPerformed
         // TODO add your handling code here:
+        if((conStart = jfEnterStartRoute.getText()).equals("") ||
+            (conDestination = jfEnterDestinationRoute.getText()).equals(""))
+        { 
+            ConnectionInfo cinfo = new ConnectionInfo();
+            cinfo.setVisible(true);
+            return;
+        }
+        
+        Controller.searchConnection(conStart, conDestination);
+        
         ListConnections ls = new ListConnections();
         ls.setVisible(true);
         this.setVisible(false);

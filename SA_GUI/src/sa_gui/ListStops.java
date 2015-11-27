@@ -44,7 +44,6 @@ public class ListStops extends javax.swing.JFrame {
         // enter results to table
         try{
             DefaultTableModel stopmodel = new DefaultTableModel();
-            ResultSet stops = Controller.getResultStop();
             jtStopsTable.setModel(stopmodel);
          
             stopmodel.addColumn("Name");
@@ -52,13 +51,13 @@ public class ListStops extends javax.swing.JFrame {
             stopmodel.addColumn("Longitude");
         
             while(rsstop.next()){
-                stopmodel.addRow(new Object[]{stops.getString(4), stops.getString(2), stops.getString(3)});
+                stopmodel.addRow(new Object[]{rsstop.getString(4), rsstop.getString(2), rsstop.getString(3)});
             }
         
         } catch(SQLException se){
             //Handle errors for JDBC
             se.printStackTrace();
-        }catch(Exception e){
+        } catch(Exception e){
             //Handle errors for Class.forName
             e.printStackTrace();
         }

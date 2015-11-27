@@ -28,6 +28,10 @@ public class Controller {
     static double stoplat;
     static double stoplon;
     
+    static ResultSet rsconnection;
+    static String connectionstart;
+    static String connectiondest;
+    
     /**
      * @param args the command line arguments
      */
@@ -60,18 +64,18 @@ public class Controller {
           
             if (stopname != "leer")
             {
-                sql += "name = \"" + stopname + "\"";
+                sql += "name LIKE '%" + stopname + "%'";
                 bool = true;
             }
             if (stoplat != 0)
             {
-                if(bool == true) { sql += "AND "; }
+                if(bool == true) { sql += " AND "; }
                 sql += "latitude = '" + stoplat + "'";
                 bool = true;
             }
             if (stoplon != 0)
             {
-                if(bool == true) { sql += "AND "; }
+                if(bool == true) { sql += " AND "; }
                 sql += "longitude = '" + stoplon + "'";
             }
             
@@ -90,6 +94,45 @@ public class Controller {
     public static String getStopName() { return stopname; }
     public static double getStopLat() { return stoplat; }
     public static double getStopLon() { return stoplon; }
-    public static ResultSet getResultStop() { return rsstop; }
+    
+    public static void searchConnection(String conStart, String conDestination){
+        Connection conn = null;
+        Statement stmt = null;
+                
+        connectionstart = conStart;
+        connectiondest = conDestination;
+        
+        try {
+            //register JDBC driver
+            //Class.forName(driver);
+            
+            //open connection
+            conn = DriverManager.getConnection(DB_URL, user, pass);
+            
+            
+            stmt = conn.createStatement();
+            
+            String sql = "SELECT r.name FROM (SELECT route_id, m.stop_id ";
+            sql += "FROM task1 t2 INNER JOIN mapping m ON (t2.id = m.stop_id) ";
+            sql += "WHERE t2.name LIKE '%" + connectionstart + "%') t1 ";
+            sql += "INNER JOIN (SELECT route_id ";
+            sql += "FROM task1 t3 INNER JOIN mapping m ON (t3.id = m.stop_id) ";
+            sql += "WHERE t3.name LIKE '%" + connectiondest + "%' ) t2 ON(t1.route_id = t2.route_id) ";
+            sql += "INNER JOIN routes r ON(r.route_id = t2.route_id)";
+                       
+            rsconnection = stmt.executeQuery(sql);
+            
+                    
+        } catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+    }
+    
+    public static String getConStart() { return connectionstart; }
+    public static String getConDest() { return connectiondest; }
     
 }

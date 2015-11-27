@@ -5,6 +5,10 @@
  */
 package sa_gui;
 
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+import static sa_gui.Controller.rsconnection;
+
 /**
  *
  * @author Sandra
@@ -17,6 +21,30 @@ public class ListConnections extends javax.swing.JFrame {
     public ListConnections() {
         initComponents();
         this.setTitle("Program - Search Connection");
+        
+        String conStart = Controller.getConStart();
+        String conDest = Controller.getConDest();
+        
+        jlStartRouteChange.setText(conStart);
+        jlDestinationRouteChange.setText(conDest);
+        
+        try {
+            DefaultTableModel conmodel = new DefaultTableModel();
+            jtConnectionTable.setModel(conmodel);
+            
+            conmodel.addColumn("Route");
+            
+            while(rsconnection.next()){
+                conmodel.addRow(new Object[]{rsconnection.getString(1)});
+            }
+            
+        } catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        } catch(Exception e){
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -35,7 +63,7 @@ public class ListConnections extends javax.swing.JFrame {
         jlStartRouteChange = new javax.swing.JLabel();
         jlDestinationRouteChange = new javax.swing.JLabel();
         RouteTable = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtConnectionTable = new javax.swing.JTable();
         jbBackButton = new javax.swing.JToggleButton();
         jbHomeButton = new javax.swing.JToggleButton();
 
@@ -56,7 +84,7 @@ public class ListConnections extends javax.swing.JFrame {
 
         jlDestinationRouteChange.setText("jLabel1");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtConnectionTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
                 {null},
@@ -67,7 +95,7 @@ public class ListConnections extends javax.swing.JFrame {
                 "Route"
             }
         ));
-        RouteTable.setViewportView(jTable1);
+        RouteTable.setViewportView(jtConnectionTable);
 
         jbBackButton.setText("Back");
         jbBackButton.addActionListener(new java.awt.event.ActionListener() {
@@ -197,7 +225,6 @@ public class ListConnections extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane RouteTable;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JToggleButton jbBackButton;
     private javax.swing.JToggleButton jbHomeButton;
     private javax.swing.JLabel jlDestinationRoute;
@@ -205,5 +232,6 @@ public class ListConnections extends javax.swing.JFrame {
     private javax.swing.JLabel jlStartRoute;
     private javax.swing.JLabel jlStartRouteChange;
     private javax.swing.JLabel jlTitle;
+    private javax.swing.JTable jtConnectionTable;
     // End of variables declaration//GEN-END:variables
 }
