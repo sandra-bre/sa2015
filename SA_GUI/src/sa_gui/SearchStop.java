@@ -11,6 +11,11 @@ package sa_gui;
  */
 public class SearchStop extends javax.swing.JFrame {
 
+    /* My variables: */
+    String nameStop;
+    double latStop;
+    double lonStop;
+    
     /**
      * Creates new form SearchStop
      */
@@ -69,12 +74,6 @@ public class SearchStop extends javax.swing.JFrame {
 
         jlLongitude.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jlLongitude.setText("Longitude:");
-
-        jfEnterName.setText("jTextField2");
-
-        jfEnterLat.setText("jTextField2");
-
-        jfEnterLon.setText("jTextField2");
 
         jbSearchButton.setText("Search");
         jbSearchButton.addActionListener(new java.awt.event.ActionListener() {
@@ -155,6 +154,30 @@ public class SearchStop extends javax.swing.JFrame {
     private void jbSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSearchButtonActionPerformed
         // TODO add your handling code here:
         ListStops lssdialog = new ListStops();
+        
+        /* get input data: */
+        String tmp;
+        
+        if((nameStop = jfEnterName.getText()).equals(""))
+        { nameStop = "leer"; }
+        if((tmp = jfEnterLat.getText()).equals(""))
+        { latStop = 0; }
+        else
+        { latStop = Double.parseDouble(tmp); }
+        if((tmp = jfEnterLon.getText()).equals(""))
+        { lonStop = 0; }
+        else
+        { lonStop = Double.parseDouble(tmp); }
+        
+        if(nameStop.equals("leer") && latStop == 0 & lonStop == 0)
+        {
+            StopInfo sinfo = new StopInfo();
+            sinfo.setVisible(true);
+            return;
+        }
+        
+        Controller.searchStop(nameStop, latStop, lonStop);
+        
         lssdialog.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jbSearchButtonActionPerformed
@@ -196,7 +219,7 @@ public class SearchStop extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SearchStop().setVisible(true);
+                new SearchStop().setVisible(true);                
             }
         });
     }

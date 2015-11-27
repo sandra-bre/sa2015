@@ -16,6 +16,8 @@ public class SA_GUI {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        HomeWindow hw = new HomeWindow();
+        hw.setVisible(true);
     }
     
 }
