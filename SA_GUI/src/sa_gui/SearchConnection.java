@@ -5,6 +5,8 @@
  */
 package sa_gui;
 
+import static sa_gui.Controller.routestops;
+
 /**
  *
  * @author Sandra
@@ -156,6 +158,12 @@ public class SearchConnection extends javax.swing.JFrame {
         {
             ConInfoNoStop nostop = new ConInfoNoStop();
             nostop.setVisible(true);
+            return;
+        }
+        else if(routestops[0] == routestops[1])
+        {
+            ConSameStop sstop = new ConSameStop();
+            sstop.setVisible(true);
             return;
         }
         
