@@ -38,7 +38,7 @@ public class AddRoute extends javax.swing.JFrame {
         jfEnterStartRoute = new javax.swing.JTextField();
         jfEnterDestinationRoute = new javax.swing.JTextField();
         jfEnterStops = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jfEnterRouteStops = new javax.swing.JTextArea();
         jlInfo = new javax.swing.JLabel();
         jbNewRouteButton = new javax.swing.JToggleButton();
         jbCancelButton = new javax.swing.JToggleButton();
@@ -62,9 +62,9 @@ public class AddRoute extends javax.swing.JFrame {
         jlStopsRoute.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jlStopsRoute.setText("Stops:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jfEnterStops.setViewportView(jTextArea1);
+        jfEnterRouteStops.setColumns(20);
+        jfEnterRouteStops.setRows(5);
+        jfEnterStops.setViewportView(jfEnterRouteStops);
 
         jlInfo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jlInfo.setText("Seperate Stops with Enter.");
@@ -161,6 +161,28 @@ public class AddRoute extends javax.swing.JFrame {
 
     private void jbNewRouteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNewRouteButtonActionPerformed
         // TODO add your handling code here:
+        String routename, routestart, routedest, tmp;
+        
+        if((routename = jfEnterRouteName.getText()).equals("") ||
+            (routestart = jfEnterStartRoute.getText()).equals("") ||
+            (routedest = jfEnterDestinationRoute.getText()).equals(""))
+        {
+            RouteInfo rinfo = new RouteInfo();
+            rinfo.setVisible(true);
+            return;
+        }
+        
+        tmp = jfEnterRouteStops.getText();
+        
+        String[] routestops = tmp.split("\n");
+                
+        if(Controller.checkRouteStops(routename, routestart, routedest, routestops) == false)
+        {
+            AddRouteError err = new AddRouteError();
+            err.setVisible(true);
+            return;
+        }
+        
         ConfirmRoute cr = new ConfirmRoute();
         cr.setVisible(true);
         this.setVisible(false);
@@ -204,11 +226,11 @@ public class AddRoute extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JToggleButton jbCancelButton;
     private javax.swing.JToggleButton jbNewRouteButton;
     private javax.swing.JTextField jfEnterDestinationRoute;
     private javax.swing.JTextField jfEnterRouteName;
+    private javax.swing.JTextArea jfEnterRouteStops;
     private javax.swing.JTextField jfEnterStartRoute;
     private javax.swing.JScrollPane jfEnterStops;
     private javax.swing.JLabel jlDestinationRoute;

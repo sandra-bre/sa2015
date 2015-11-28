@@ -32,6 +32,13 @@ public class Controller {
     static String connectionstart;
     static String connectiondest;
     
+    static ResultSet tmp;
+    static String routename;
+    static String routestart;
+    static String routedest;
+    static String[] routestops = new String[100];
+    static int[] stopIDs = new int[100];
+    
     /**
      * @param args the command line arguments
      */
@@ -50,9 +57,6 @@ public class Controller {
         stoplon = lon;
         
         try {
-            //register JDBC driver
-            //Class.forName(driver);
-            
             //open connection
             conn = DriverManager.getConnection(DB_URL, user, pass);
             
@@ -103,13 +107,8 @@ public class Controller {
         connectiondest = conDestination;
         
         try {
-            //register JDBC driver
-            //Class.forName(driver);
-            
             //open connection
             conn = DriverManager.getConnection(DB_URL, user, pass);
-            
-            
             stmt = conn.createStatement();
             
             String sql = "SELECT r.name FROM (SELECT route_id, m.stop_id ";
@@ -134,5 +133,120 @@ public class Controller {
     
     public static String getConStart() { return connectionstart; }
     public static String getConDest() { return connectiondest; }
+    
+    public static boolean checkRouteStops(String rname, String rstart, String rdest, String[] rstops){
+        //check if stops exist
+        Connection conn = null;
+        Statement stmt = null;
+        
+        routename = rname;
+        routestart = rstart;
+        routedest = rdest;
+        
+        try {
+            //open connection
+            conn = DriverManager.getConnection(DB_URL, user, pass);
+            stmt = conn.createStatement();
+
+            String sql = "SELECT DISTINCT name, id FROM task1 WHERE name LIKE '%" + routestart + "%'";
+            tmp = stmt.executeQuery(sql);
+
+            if(!tmp.isBeforeFirst()) { return false; }
+            else
+            { 
+                tmp.first(); routestart = tmp.getString(1); 
+                stopIDs[0] = Integer.parseInt(tmp.getString(2));
+            } 
+
+            sql = "SELECT DISTINCT name, id FROM task1 WHERE name LIKE '%" + routedest + "%'";
+            tmp = stmt.executeQuery(sql);
+
+            if(!tmp.isBeforeFirst()) { return false; }
+            else
+            { 
+                tmp.first(); routedest = tmp.getString(1); 
+                stopIDs[1] = Integer.parseInt(tmp.getString(2));
+            }
+            
+            int routeid = 0;
+            for (int i = 0; i < rstops.length; i++)
+            {
+                if(rstops[i].equals("") == false)
+                {
+                    String tmpstring = rstops[i];
+                    sql = "SELECT DISTINCT name, id FROM task1 WHERE name LIKE '%" + tmpstring + "%'";
+                    tmp = stmt.executeQuery(sql);
+                    if(tmp.isBeforeFirst()) 
+                    {
+                        tmp.first();
+                        routestops[routeid] = new String(tmp.getString(1));
+                        stopIDs[routeid + 2] = Integer.parseInt(tmp.getString(2));
+                        routeid++;
+                    }
+                }                
+            }
+        
+        } catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }catch(Exception e){
+            //Handle errors for Class.forName
+            e.printStackTrace();
+        }
+        
+        return true;
+        
+    }
+    
+    public static boolean createNewRoute(){
+        Connection conn = null;
+        Statement stmt = null;
+                
+        try {            
+            //open connection
+            conn = DriverManager.getConnection(DB_URL, user, pass);
+            stmt = conn.createStatement();
+            
+            //route erstellen
+            String sql = "SELECT MAX(route_id) FROM routes";
+                       
+            rsconnection = stmt.executeQuery(sql);
+            //rsconnection.first();
+            rsconnection.first();
+            long newID = (Long.parseLong(rsconnection.getString(1))) + 1;
+            
+            sql = "INSERT INTO routes (route_id, name) VALUES ('" + newID + "', '"
+                 +  routename + ": " + routestart + " => " + routedest + "')";
+            
+            stmt.executeUpdate(sql);
+            
+            if(stopIDs[0] != 0)
+            {
+                sql = "INSERT INTO mapping (route_id, stop_id) VALUES ";
+                for(int i = 0; stopIDs[i] != 0; i++)
+                {
+                    sql += "(" + newID + ", " + stopIDs[i] + ")";
+                    if(stopIDs[i+1] != 0) { sql += " , "; }
+                }
+                stmt.executeUpdate(sql);
+            }
+            
+            
+        } catch(SQLException se){
+            //Handle errors for JDBC
+            se.printStackTrace();
+            return false;
+        }catch(Exception e){
+            //Handle errors for Class.forName
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static String getRouteName() { return routename; }
+    public static String getRouteStart() { return routestart; }
+    public static String getRouteDest() { return routedest; }
+    public static String[] getRouteStops() { return routestops; }
     
 }

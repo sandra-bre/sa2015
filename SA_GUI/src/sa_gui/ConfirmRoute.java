@@ -17,6 +17,25 @@ public class ConfirmRoute extends javax.swing.JFrame {
     public ConfirmRoute() {
         initComponents();
         this.setTitle("Program - Add New Route");
+        
+        String[] stops = Controller.getRouteStops();
+        
+        if(stops.length != 0)
+        {
+            String tmp = stops[0];
+            for (int i = 1; stops[i] != null; i++)
+            {
+                tmp += "; " + stops[i];
+            }
+            jlEnterRouteStops.setText(tmp);
+        }
+               
+        jlEnterRouteName.setText(Controller.getRouteName());
+        jlEnterRouteStart.setText(Controller.getRouteStart());
+        jlEnterRouteDestination.setText(Controller.getRouteDest());
+        
+        
+        
     }
 
     /**
@@ -171,9 +190,20 @@ public class ConfirmRoute extends javax.swing.JFrame {
 
     private void jbAddRouteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddRouteButtonActionPerformed
         // TODO add your handling code here:
-        HomeWindow hw = new HomeWindow();
-        hw.setVisible(true);
-        this.setVisible(false);
+        
+        if(Controller.createNewRoute() == true)
+        {
+            RouteSuccess rsuc = new RouteSuccess();
+            rsuc.setVisible(true);
+            this.setVisible(false);
+        }  
+        else
+        {
+            RouteError rerr = new RouteError();
+            rerr.setVisible(true);
+            return;
+        }
+        
     }//GEN-LAST:event_jbAddRouteButtonActionPerformed
 
     private void jbHomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbHomeButtonActionPerformed
