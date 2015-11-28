@@ -5,7 +5,7 @@
  */
 package sa_gui;
 
-import static sa_gui.Controller.routestops;
+import static sa_gui.Controller.connectionfromto;
 
 /**
  *
@@ -22,7 +22,7 @@ public class SearchConnection extends javax.swing.JFrame {
      */
     public SearchConnection() {
         initComponents();
-        this.setTitle("Program - Search Connection");
+        this.setTitle("Routenator - Search Connection");
     }
 
     /**
@@ -153,19 +153,20 @@ public class SearchConnection extends javax.swing.JFrame {
             cinfo.setVisible(true);
             return;
         }
-        
+                
         if (Controller.searchConnection(conStart, conDestination) == false)
         {
             ConInfoNoStop nostop = new ConInfoNoStop();
             nostop.setVisible(true);
             return;
         }
-        else if(routestops[0] == routestops[1])
+        else if(connectionfromto[0].equals(connectionfromto[1]))
         {
             ConSameStop sstop = new ConSameStop();
             sstop.setVisible(true);
             return;
         }
+        
         
         ListConnections ls = new ListConnections();
         ls.setVisible(true);

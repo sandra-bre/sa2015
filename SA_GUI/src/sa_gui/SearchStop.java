@@ -27,7 +27,7 @@ public class SearchStop extends javax.swing.JFrame {
      */
     public SearchStop() {
         initComponents();
-        this.setTitle("Program - Search Stops");
+        this.setTitle("Routenator - Search Stops");
         latoperator = "=";
         lonoperator = "=";
         LatExactBox.setSelected(true);
@@ -155,6 +155,11 @@ public class SearchStop extends javax.swing.JFrame {
         });
 
         jbExitButton.setText("Exit");
+        jbExitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExitButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -328,6 +333,11 @@ public class SearchStop extends javax.swing.JFrame {
         LonExactBox.setSelected(false);
         LonBelowBox.setSelected(false);
     }//GEN-LAST:event_LonAboveBoxActionPerformed
+
+    private void jbExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExitButtonActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jbExitButtonActionPerformed
 
     /**
      * @param args the command line arguments

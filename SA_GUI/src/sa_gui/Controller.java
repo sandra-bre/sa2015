@@ -116,7 +116,7 @@ public class Controller {
             
             String sql = "SELECT DISTINCT name FROM task1 WHERE name LIKE '%" + connectionstart + "%'";
             tmp = stmt.executeQuery(sql);
-            
+                    
             if(!tmp.isBeforeFirst()) { return false; }
             else
             { 

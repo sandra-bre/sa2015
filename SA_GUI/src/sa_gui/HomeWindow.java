@@ -16,7 +16,7 @@ public class HomeWindow extends javax.swing.JFrame {
      */
     public HomeWindow() {
         initComponents();
-        this.setTitle("my program");
+        this.setTitle("Routenator");
     }
 
     /**
@@ -40,7 +40,7 @@ public class HomeWindow extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
         jlTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jlTitle.setText("My program");
+        jlTitle.setText("Routenator");
         jlTitle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jbSearchStopButton.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N

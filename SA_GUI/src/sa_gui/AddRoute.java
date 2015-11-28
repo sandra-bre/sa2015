@@ -16,7 +16,7 @@ public class AddRoute extends javax.swing.JFrame {
      */
     public AddRoute() {
         initComponents();
-        this.setTitle("Program - Add New Route");
+        this.setTitle("Routenator - Add New Route");
     }
 
     /**

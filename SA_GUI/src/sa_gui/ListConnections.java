@@ -21,7 +21,7 @@ public class ListConnections extends javax.swing.JFrame {
      */
     public ListConnections() {
         initComponents();
-        this.setTitle("Program - Search Connection");
+        this.setTitle("Routenator - Search Connection");
         
         String conStart = Controller.getConStart();
         String conDest = Controller.getConDest();

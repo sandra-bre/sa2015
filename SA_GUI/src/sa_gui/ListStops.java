@@ -24,7 +24,7 @@ public class ListStops extends javax.swing.JFrame {
      */
     public ListStops() throws SQLException {
         initComponents();
-        this.setTitle("Program - Search Stops");
+        this.setTitle("Routenator - Search Stops");
         
         String name = Controller.getStopName();
         double lat = Controller.getStopLat();

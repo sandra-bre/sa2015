@@ -16,7 +16,7 @@ public class ConfirmRoute extends javax.swing.JFrame {
      */
     public ConfirmRoute() {
         initComponents();
-        this.setTitle("Program - Add New Route");
+        this.setTitle("Routenator - Add New Route");
         
         String[] stops = Controller.getRouteStops();
         
