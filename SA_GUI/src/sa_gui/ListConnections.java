@@ -8,6 +8,7 @@ package sa_gui;
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 import static sa_gui.Controller.rsconnection;
+import static sa_gui.Controller.connectionfromto;
 
 /**
  *
@@ -25,8 +26,8 @@ public class ListConnections extends javax.swing.JFrame {
         String conStart = Controller.getConStart();
         String conDest = Controller.getConDest();
         
-        jlStartRouteChange.setText(conStart);
-        jlDestinationRouteChange.setText(conDest);
+        jlStartRouteChange.setText(connectionfromto[0]);
+        jlDestinationRouteChange.setText(connectionfromto[1]);
         
         try {
             DefaultTableModel conmodel = new DefaultTableModel();

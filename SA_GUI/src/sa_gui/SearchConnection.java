@@ -152,7 +152,12 @@ public class SearchConnection extends javax.swing.JFrame {
             return;
         }
         
-        Controller.searchConnection(conStart, conDestination);
+        if (Controller.searchConnection(conStart, conDestination) == false)
+        {
+            ConInfoNoStop nostop = new ConInfoNoStop();
+            nostop.setVisible(true);
+            return;
+        }
         
         ListConnections ls = new ListConnections();
         ls.setVisible(true);
