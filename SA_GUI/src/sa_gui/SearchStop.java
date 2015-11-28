@@ -301,14 +301,14 @@ public class SearchStop extends javax.swing.JFrame {
 
     private void LatBelowBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LatBelowBoxActionPerformed
         // TODO add your handling code here:
-        latoperator = "<";
+        latoperator = "<=";
         LatExactBox.setSelected(false);
         LatAboveBox.setSelected(false);
     }//GEN-LAST:event_LatBelowBoxActionPerformed
 
     private void LatAboveBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LatAboveBoxActionPerformed
         // TODO add your handling code here:
-        latoperator = ">";
+        latoperator = ">=";
         LatExactBox.setSelected(false);
         LatBelowBox.setSelected(false);
     }//GEN-LAST:event_LatAboveBoxActionPerformed
@@ -322,14 +322,14 @@ public class SearchStop extends javax.swing.JFrame {
 
     private void LonBelowBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LonBelowBoxActionPerformed
         // TODO add your handling code here:
-        lonoperator = "<";
+        lonoperator = "<=";
         LonExactBox.setSelected(false);
         LonAboveBox.setSelected(false);
     }//GEN-LAST:event_LonBelowBoxActionPerformed
 
     private void LonAboveBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LonAboveBoxActionPerformed
         // TODO add your handling code here:
-        lonoperator = ">";
+        lonoperator = ">=";
         LonExactBox.setSelected(false);
         LonBelowBox.setSelected(false);
     }//GEN-LAST:event_LonAboveBoxActionPerformed
