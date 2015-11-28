@@ -8,6 +8,8 @@ package sa_gui;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static sa_gui.Controller.latoperator;
+import static sa_gui.Controller.lonoperator;
 
 /**
  *
@@ -49,6 +51,13 @@ public class SearchStop extends javax.swing.JFrame {
         jfEnterLon = new javax.swing.JTextField();
         jbSearchButton = new javax.swing.JToggleButton();
         jbCancelButton = new javax.swing.JToggleButton();
+        LatExactBox = new javax.swing.JRadioButton();
+        LatAboveBox = new javax.swing.JRadioButton();
+        LatBelowBox = new javax.swing.JRadioButton();
+        LonAboveBox = new javax.swing.JRadioButton();
+        LonBelowBox = new javax.swing.JRadioButton();
+        LonExactBox = new javax.swing.JRadioButton();
+        jbExitButton = new javax.swing.JToggleButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -93,17 +102,80 @@ public class SearchStop extends javax.swing.JFrame {
             }
         });
 
+        LatExactBox.setBackground(new java.awt.Color(204, 255, 204));
+        LatExactBox.setText("Exact");
+        LatExactBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LatExactBoxActionPerformed(evt);
+            }
+        });
+
+        LatAboveBox.setBackground(new java.awt.Color(204, 255, 204));
+        LatAboveBox.setText("Above");
+        LatAboveBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LatAboveBoxActionPerformed(evt);
+            }
+        });
+
+        LatBelowBox.setBackground(new java.awt.Color(204, 255, 204));
+        LatBelowBox.setText("Below");
+        LatBelowBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LatBelowBoxActionPerformed(evt);
+            }
+        });
+
+        LonAboveBox.setBackground(new java.awt.Color(204, 255, 204));
+        LonAboveBox.setText("Above");
+        LonAboveBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LonAboveBoxActionPerformed(evt);
+            }
+        });
+
+        LonBelowBox.setBackground(new java.awt.Color(204, 255, 204));
+        LonBelowBox.setText("Below");
+        LonBelowBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LonBelowBoxActionPerformed(evt);
+            }
+        });
+
+        LonExactBox.setBackground(new java.awt.Color(204, 255, 204));
+        LonExactBox.setText("Exact");
+        LonExactBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LonExactBoxActionPerformed(evt);
+            }
+        });
+
+        jbExitButton.setText("Exit");
+        jbExitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExitButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
-                        .addGap(69, 69, 69))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(LonExactBox)
+                        .addGap(18, 18, 18)
+                        .addComponent(LonBelowBox)
+                        .addGap(18, 18, 18)
+                        .addComponent(LonAboveBox))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbExitButton))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jlLatitude, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jlSearchName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -111,6 +183,13 @@ public class SearchStop extends javax.swing.JFrame {
                             .addComponent(jbCancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(LatExactBox)
+                                .addGap(18, 18, 18)
+                                .addComponent(LatBelowBox)
+                                .addGap(18, 18, 18)
+                                .addComponent(LatAboveBox))
                             .addComponent(jfEnterName)
                             .addComponent(jfEnterLat)
                             .addComponent(jfEnterLon)
@@ -121,7 +200,9 @@ public class SearchStop extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jlTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbExitButton))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlSearchName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -132,12 +213,22 @@ public class SearchStop extends javax.swing.JFrame {
                     .addComponent(jfEnterLat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LatExactBox)
+                    .addComponent(LatAboveBox)
+                    .addComponent(LatBelowBox))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlLongitude, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jfEnterLon, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LonAboveBox)
+                    .addComponent(LonBelowBox)
+                    .addComponent(LonExactBox))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jbSearchButton, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                    .addComponent(jbCancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbCancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -197,6 +288,53 @@ public class SearchStop extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jbCancelButtonActionPerformed
 
+    private void LatExactBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LatExactBoxActionPerformed
+        // TODO add your handling code here:
+        latoperator = "=";
+        LatAboveBox.setSelected(false);
+        LatBelowBox.setSelected(false);
+    }//GEN-LAST:event_LatExactBoxActionPerformed
+
+    private void LatBelowBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LatBelowBoxActionPerformed
+        // TODO add your handling code here:
+        latoperator = "<";
+        LatExactBox.setSelected(false);
+        LatAboveBox.setSelected(false);
+    }//GEN-LAST:event_LatBelowBoxActionPerformed
+
+    private void LatAboveBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LatAboveBoxActionPerformed
+        // TODO add your handling code here:
+        latoperator = ">";
+        LatExactBox.setSelected(false);
+        LatBelowBox.setSelected(false);
+    }//GEN-LAST:event_LatAboveBoxActionPerformed
+
+    private void LonExactBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LonExactBoxActionPerformed
+        // TODO add your handling code here:
+        lonoperator = "=";
+        LonAboveBox.setSelected(false);
+        LonBelowBox.setSelected(false);
+    }//GEN-LAST:event_LonExactBoxActionPerformed
+
+    private void LonBelowBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LonBelowBoxActionPerformed
+        // TODO add your handling code here:
+        lonoperator = "<";
+        LonExactBox.setSelected(false);
+        LonAboveBox.setSelected(false);
+    }//GEN-LAST:event_LonBelowBoxActionPerformed
+
+    private void LonAboveBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LonAboveBoxActionPerformed
+        // TODO add your handling code here:
+        lonoperator = ">";
+        LonExactBox.setSelected(false);
+        LonBelowBox.setSelected(false);
+    }//GEN-LAST:event_LonAboveBoxActionPerformed
+
+    private void jbExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExitButtonActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jbExitButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -233,10 +371,17 @@ public class SearchStop extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton LatAboveBox;
+    private javax.swing.JRadioButton LatBelowBox;
+    private javax.swing.JRadioButton LatExactBox;
+    private javax.swing.JRadioButton LonAboveBox;
+    private javax.swing.JRadioButton LonBelowBox;
+    private javax.swing.JRadioButton LonExactBox;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JToggleButton jbCancelButton;
+    private javax.swing.JToggleButton jbExitButton;
     private javax.swing.JToggleButton jbSearchButton;
     private javax.swing.JTextField jfEnterLat;
     private javax.swing.JTextField jfEnterLon;

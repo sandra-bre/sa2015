@@ -33,6 +33,7 @@ public class HomeWindow extends javax.swing.JFrame {
         jbSearchStopButton = new javax.swing.JToggleButton();
         jbSearchConnectionButton = new javax.swing.JToggleButton();
         jbAddRouteButton = new javax.swing.JToggleButton();
+        jbExitButton = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,9 +60,18 @@ public class HomeWindow extends javax.swing.JFrame {
         });
 
         jbAddRouteButton.setText("Add New Route");
+        jbAddRouteButton.setMaximumSize(new java.awt.Dimension(135, 23));
+        jbAddRouteButton.setMinimumSize(new java.awt.Dimension(135, 23));
         jbAddRouteButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ClickAddRoute(evt);
+            }
+        });
+
+        jbExitButton.setText("Exit");
+        jbExitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExitButtonActionPerformed(evt);
             }
         });
 
@@ -73,7 +83,9 @@ public class HomeWindow extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbExitButton))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(86, 86, 86)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -87,14 +99,18 @@ public class HomeWindow extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jbExitButton)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addComponent(jbSearchStopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jbSearchConnectionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jbAddRouteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addComponent(jbAddRouteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -131,6 +147,11 @@ public class HomeWindow extends javax.swing.JFrame {
         ardialog.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_ClickAddRoute
+
+    private void jbExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExitButtonActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jbExitButtonActionPerformed
     
     /**
      * @param args the command line arguments
@@ -170,6 +191,7 @@ public class HomeWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToggleButton jbAddRouteButton;
+    private javax.swing.JToggleButton jbExitButton;
     private javax.swing.JToggleButton jbSearchConnectionButton;
     private javax.swing.JToggleButton jbSearchStopButton;
     private javax.swing.JLabel jlTitle;

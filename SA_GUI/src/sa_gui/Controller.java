@@ -27,6 +27,8 @@ public class Controller {
     static String stopname;
     static double stoplat;
     static double stoplon;
+    static String latoperator;
+    static String lonoperator;
     
     static ResultSet rsconnection;
     static String connectionstart;
@@ -74,13 +76,13 @@ public class Controller {
             if (stoplat != 0)
             {
                 if(bool == true) { sql += " AND "; }
-                sql += "latitude = '" + stoplat + "'";
+                sql += "latitude " + latoperator + " '" + stoplat + "'";
                 bool = true;
             }
             if (stoplon != 0)
             {
                 if(bool == true) { sql += " AND "; }
-                sql += "longitude = '" + stoplon + "'";
+                sql += "longitude " + lonoperator + " '"+ stoplon + "'";
             }
             
             rsstop = stmt.executeQuery(sql);
