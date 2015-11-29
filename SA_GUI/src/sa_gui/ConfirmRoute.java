@@ -96,7 +96,7 @@ public class ConfirmRoute extends javax.swing.JFrame {
         jlEnterRouteStops.setText("jLabel1");
         jlEnterRouteStops.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jbAddRouteButton.setText("Add New Route");
+        jbAddRouteButton.setText("Add This Route");
         jbAddRouteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbAddRouteButtonActionPerformed(evt);
@@ -151,7 +151,7 @@ public class ConfirmRoute extends javax.swing.JFrame {
                         .addComponent(jbBackButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbHomeButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
                         .addComponent(jbAddRouteButton)))
                 .addContainerGap())
         );
