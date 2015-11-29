@@ -260,13 +260,35 @@ public class SearchStop extends javax.swing.JFrame {
         if((tmp = jfEnterLat.getText()).equals(""))
         { latStop = 0; }
         else
-        { latStop = Double.parseDouble(tmp); }
+        { 
+            tmp = tmp.replace(",", ".");
+            try {
+                latStop = Double.parseDouble(tmp);
+            }
+            catch (NumberFormatException e)
+            {
+                StopNoConvert scon = new StopNoConvert();
+                scon.setVisible(true);
+                return;
+            }
+        }
         if((tmp = jfEnterLon.getText()).equals(""))
         { lonStop = 0; }
         else
-        { lonStop = Double.parseDouble(tmp); }
+        { 
+            tmp = tmp.replace(",", ".");
+            try {
+                lonStop = Double.parseDouble(tmp);
+            }
+            catch (NumberFormatException e)
+            {
+                StopNoConvert scon = new StopNoConvert();
+                scon.setVisible(true);
+                return;
+            }
+        }
         
-        if(nameStop.equals("leer") && latStop == 0 & lonStop == 0)
+        if(nameStop.equals("leer") && latStop == 0 && lonStop == 0)
         {
             StopInfo sinfo = new StopInfo();
             sinfo.setVisible(true);
