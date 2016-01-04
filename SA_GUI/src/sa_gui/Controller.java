@@ -62,8 +62,7 @@ public class Controller {
         try {
             //open connection
             conn = DriverManager.getConnection(DB_URL, user, pass);
-            
-            
+                        
             stmt = conn.createStatement();
             
             String sql = "SELECT * FROM task1 where ";
