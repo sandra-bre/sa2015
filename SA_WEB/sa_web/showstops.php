@@ -19,8 +19,8 @@
                 echo "Please enter at least one search criteria.";
                 echo '<br><br>';
                 
-                echo '<a href="index.php">home</a><br>';
-                echo '<a href="searchstop.php">back</a><br>';
+                echo '<a id="home" href="index.php">home</a><br>';
+                echo '<a id="back" href="searchstop.php">back</a><br>';
                 
                 exit;
             }
@@ -33,8 +33,8 @@
                 echo "Latitude and Longitude must be numbers.";
                 echo '<br><br>';
                 
-                echo '<a href="index.php">home</a><br>';
-                echo '<a href="searchstop.php">back</a><br>';
+                echo '<a id="home" href="index.php">home</a><br>';
+                echo '<a id="back" href="searchstop.php">back</a><br>';
                 
                 exit;
             }
@@ -87,7 +87,10 @@
                 $sql .= $lon . "'";
                 $bool = true;
             }
-            echo '</table>';
+            echo '</table><br>';
+            echo '<a id="home" href="index.php">home</a><br>';
+            echo '<a id="back" href="searchstop.php">back</a><br>';
+            
             
         ?>
         

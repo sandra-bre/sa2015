@@ -36,7 +36,7 @@ and open the template in the editor.
             <input type="submit" value="Search"><br>
         </form>
         
-        <a href="index.php">home</a>
+        <a id="home" href="index.php">home</a>
     </body>
 </html>
 

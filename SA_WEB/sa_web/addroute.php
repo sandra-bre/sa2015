@@ -7,11 +7,35 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
+        <link rel="stylesheet" href="routenator.css">
         <title>Routenator - Add Route</title>
     </head>
     <body>
         <h1>Add New Route</h1>
         
-        <a href="index.php">home</a>
+        <form id="addroute" method="get" action="confirmroute.php">
+            <a>Route Name:</a><br>
+            <input type="text" name="rname">
+            <br><br>
+            
+            <a>Start:</a><br>
+            <input type="text" name="rstart">
+            <br><br>
+            
+            <a>Destination:</a><br>
+            <input type="text" name="rdest">
+            <br><br>
+            
+            <a>Stops:</a><br>
+            <input type="text" name="rstops">
+            <br>
+            Seperate Stops with Semikolon.
+            <br><br>
+            
+            <input type="submit" value="Add New Route">
+        </form>
+        
+        
+        <a id="home" href="index.php">home</a>
     </body>
 </html>
