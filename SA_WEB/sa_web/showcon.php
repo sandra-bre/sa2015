@@ -10,7 +10,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="routenator.css">
         <title>Routenator - Show Connection</title>
     </head>
-    <body>
+    <body class="result">
         <h1>Show Connections</h1>
                
         <?php 
@@ -20,8 +20,10 @@ and open the template in the editor.
             if($start == "" || $dest == "") {
                 echo "<a>Please enter start and destination.</a>";
                 echo '<br><br>';
-                echo '<a id="home" href="index.php">home</a><br>';
-                echo '<a id="back" href="searchconnection.php">back</a><br>';
+                echo '<div class="links1">';
+                echo '<a id="home" href="index.php">home</a>';
+                echo '<a id="back" href="searchconnection.php">back</a>';
+                echo '</div>';
                 exit;
             }
             
@@ -30,7 +32,7 @@ and open the template in the editor.
         
              
         <?php    
-            $db = new mysqli("localhost", "root", "root", "sa_database");
+            $db = new mysqli("localhost", "root", "", "sa_database");
             if (mysqli_connect_errno()) {
                 printf("Connection failed: %s\n", mysqli_connect_error());
                 exit();
@@ -46,21 +48,24 @@ and open the template in the editor.
             if(!($result1 = $befehl1->fetch_object()) || !($result2 = $befehl2->fetch_object())) {
                 echo "<a>Unknown start and/or destination.</a>";
                 echo '<br><br>';
-                echo '<a id="home" href="index.php">home</a><br>';
-                echo '<a id="back" href="searchconnection.php">back</a><br>';
+                echo '<div class="links1">';
+                echo '<a id="home" href="index.php">home</a>';
+                echo '<a id="back" href="searchconnection.php">back</a>';
+                echo '</div>';
                 exit;
             }
             $start = $result1->name;
             $dest = $result2->name;
             
             echo "<h4>Your Search Criteria:</h4>";
-            echo "<table><tr><td>Start</td><td>" . $start . "</td></tr>";
+            echo '<table class="criteria"><tr><td>Start</td><td>' . $start . '</td></tr>';
             echo "<tr><td>Destination</td><td>" . $dest . "</td></tr></table>";
         ?>
-        <br>
-        <a id="back" href="searchconnection.php">back</a><br>
-        <a id="home" href="index.php">home</a>  
-        <br><br>
+        
+        <div class="links2">
+        <a id="back" href="searchconnection.php">back</a>
+        <a id="home" href="index.php">home</a>
+        </div>
         <?php    
             $sql = "SELECT r.name FROM (SELECT route_id, m.stop_id ";
             $sql .= "FROM task1 t2 INNER JOIN mapping m ON (t2.id = m.stop_id) ";
@@ -72,7 +77,7 @@ and open the template in the editor.
                         
             $befehl = $db->query($sql);
             
-            echo "<table><tr><th>Name</th></tr>";
+            echo '<table class="data"><tr><th>Name</th></tr>';
             
             while ($result = $befehl->fetch_object()) {
                 echo "<tr><td>"; echo $result->name; echo "</tr></td>";

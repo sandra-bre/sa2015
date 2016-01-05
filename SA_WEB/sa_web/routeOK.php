@@ -17,7 +17,7 @@ and open the template in the editor.
             $start = $_GET["start"];
             $dest = $_GET["dest"];
             
-            $db = new mysqli("localhost", "root", "root", "sa_database");
+            $db = new mysqli("localhost", "root", "", "sa_database");
             if (mysqli_connect_errno()) {
                 printf("Connection failed: %s\n", mysqli_connect_error());
                 exit();

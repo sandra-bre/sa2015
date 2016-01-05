@@ -11,6 +11,7 @@ and open the template in the editor.
         <title>Routenator - Search Connection</title>
     </head>
     <body>
+        <div class="main_window">
         <h1>Search Connection</h1>
         
         <form id="searchconnection" method="get" action="showcon.php">
@@ -27,5 +28,6 @@ and open the template in the editor.
         
         
         <a id="home" href="index.php">home</a>
+        <div>
     </body>
 </html>

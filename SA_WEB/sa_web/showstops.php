@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="routenator.css">
         <title>Routenator - Show Stops</title>
     </head>
-    <body>
+    <body class="result">
         <h1>Show Stops</h1>
         
         <?php
@@ -17,10 +17,11 @@
             
             if($name == "" && $lat == "" && $lon == "") {
                 echo "Please enter at least one search criteria.";
-                echo '<br><br>';
                 
-                echo '<a id="home" href="index.php">home</a><br>';
-                echo '<a id="back" href="searchstop.php">back</a><br>';
+                echo '<div class="links1">';
+                echo '<a id="home" href="index.php">home</a>';
+                echo '<a id="back" href="searchstop.php">back</a>';
+                echo '</div>';
                 
                 exit;
             }
@@ -31,10 +32,11 @@
             if(((!is_numeric($lat) && !is_float($lat) && is_null($lat))) 
                     || ((!is_numeric($lon) && !is_float($lon)) && is_null($lon))) {
                 echo "Latitude and Longitude must be numbers.";
-                echo '<br><br>';
                 
-                echo '<a id="home" href="index.php">home</a><br>';
-                echo '<a id="back" href="searchstop.php">back</a><br>';
+                echo '<div class="links1">';
+                echo '<a id="home" href="index.php">home</a>';
+                echo '<a id="back" href="searchstop.php">back</a>';
+                echo '</div>';
                 
                 exit;
             }
@@ -45,7 +47,7 @@
             $sql = "SELECT * FROM task1 where ";
             $bool = false;
             
-            echo '<table style="width:50%">';
+            echo '<table class="criteria">';
             if($name != "") {
                 echo '<tr>';
                 echo '<td>Name:</td>';
@@ -87,15 +89,17 @@
                 $sql .= $lon . "'";
                 $bool = true;
             }
-            echo '</table><br>';
-            echo '<a id="home" href="index.php">home</a><br>';
-            echo '<a id="back" href="searchstop.php">back</a><br>';
+            echo '</table>';
+            echo '<div class="links2">';
+            echo '<a id="home" href="index.php">home</a>';
+            echo '<a id="back" href="searchstop.php">back</a>';
+            echo '</div>';
             
             
         ?>
         
         <?php
-            $db = new mysqli("localhost", "root", "root", "sa_database");
+            $db = new mysqli("localhost", "root", "", "sa_database");
             if (mysqli_connect_errno()) {
                 printf("Connection failed: %s\n", mysqli_connect_error());
                 exit();
@@ -103,7 +107,7 @@
 
             $befehl = $db->query($sql);
             
-            echo '<table>';
+            echo '<table class="data">';
             echo '<tr><th>Name</th>';
             echo '<th>Longitude</th>';
             echo '<th>Latitude</th></tr>';

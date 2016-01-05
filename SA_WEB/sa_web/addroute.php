@@ -11,6 +11,7 @@ and open the template in the editor.
         <title>Routenator - Add Route</title>
     </head>
     <body>
+        <div class="main_window">
         <h1>Add New Route</h1>
         
         <form id="addroute" method="get" action="confirmroute.php">
@@ -37,5 +38,6 @@ and open the template in the editor.
         
         
         <a id="home" href="index.php">home</a>
+        </div>
     </body>
 </html>
