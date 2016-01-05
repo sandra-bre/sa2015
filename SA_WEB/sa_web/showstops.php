@@ -26,8 +26,8 @@
                 exit;
             }
                       
-            str_replace(",", ".", $lat);
-            str_replace(",", ".", $lon);
+            $lat = str_replace(",", ".", $lat);
+            $lon = str_replace(",", ".", $lon);
             
             if(((!is_numeric($lat) && !is_float($lat) && is_null($lat))) 
                     || ((!is_numeric($lon) && !is_float($lon)) && is_null($lon))) {
@@ -51,7 +51,7 @@
             if($name != "") {
                 echo '<tr>';
                 echo '<td>Name:</td>';
-                echo '<td>'; echo $name; echo '</td>';
+                echo '<td>' . $name . '</td>';
                 echo '</tr>';
                 
                 $sql .= "name LIKE '%" . $name . "%'";
@@ -60,32 +60,32 @@
             if($lat != ""){
                 echo '<tr>';
                 echo '<td>Latitude:</td>';
-                echo '<td>'; echo $lat; echo '</td>';
+                echo '<td>' . $lat . '</td>';
                 echo '<td>Type:</td>';
-                echo '<td>'; echo $lattype; echo '</td>';
+                echo '<td>' . $lattype . '</td>';
                 echo '</tr>';
                 
                 if($bool == true) { $sql .= " AND "; }
                 $sql .= "latitude ";
                 if (strcmp($lattype, $ex) == 0) { $sql .= "= '"; }
-                else if (strcmp($lattype, $be)) { $sql .= "< '"; }
-                else if (strcmp($lattype, $ab)) { $sql .= "> '"; }
+                else if (strcmp($lattype, $be)) { $sql .= "> '"; }
+                else if (strcmp($lattype, $ab)) { $sql .= "< '"; }
                 $sql .= $lat . "'";
                 $bool = true;
             }
             if($lon != ""){
                 echo '<tr>';
                 echo '<td>Longitude:</td>';
-                echo '<td>'; echo $lon; echo '</td>';
+                echo '<td>' . $lon . '</td>';
                 echo '<td>Type:</td>';
-                echo '<td>'; echo $lontype; echo '</td>';
+                echo '<td>' . $lontype . '</td>';
                 echo '</tr>';
                 
                 if($bool == true) { $sql .= " AND "; }
                 $sql .= "longitude ";
                 if (strcmp($lontype, $ex) == 0) { $sql .= "= '"; }
-                else if (strcmp($lontype, $be)) { $sql .= "< '"; }
-                else if (strcmp($lontype, $ab)) { $sql .= "> '"; }
+                else if (strcmp($lontype, $be)) { $sql .= "> '"; }
+                else if (strcmp($lontype, $ab)) { $sql .= "< '"; }
                 $sql .= $lon . "'";
                 $bool = true;
             }
@@ -109,13 +109,13 @@
             
             echo '<table class="data">';
             echo '<tr><th>Name</th>';
-            echo '<th>Longitude</th>';
-            echo '<th>Latitude</th></tr>';
+            echo '<th>Latitude</th>';
+            echo '<th>Longitude</th></tr>';
             
             while($resultat = $befehl->fetch_object()) { 
-                echo '<tr><td>'; echo $resultat->name; echo '</td>';
-                echo '<td>'; echo $resultat->longitude; echo '</td>';
-                echo '<td>'; echo $resultat->latitude; echo '</td></tr>';
+                echo '<tr><td>' . $resultat->name . '</td>';
+                echo '<td>' . $resultat->latitude . '</td>';
+                echo '<td>' . $resultat->longitude . '</td></tr>';
             }
 
             $db->close();
