@@ -11,6 +11,7 @@ and open the template in the editor.
         <title>Routenator - Confirm Route</title>
     </head>
     <body>
+        <div class="main_window">
         <h1>Confirm New Route</h1>
         
         <?php 
@@ -24,13 +25,14 @@ and open the template in the editor.
             
             if($name == "" || $start == "" || $dest == "") {
                 echo "<a>Please enter a route name, start and destination.</a>";
-                echo '<br><br>';
-                echo '<a id="home" href="index.php">home</a><br>';
-                echo '<a id="back" href="addroute.php">back</a><br>';
+                echo '<div class="links3">';
+                echo '<a id="home" href="index.php">home</a>';
+                echo '<a id="back" href="addroute.php">back</a>';
+                echo '</div>';
                 exit;
             }
             
-            $db = new mysqli("localhost", "root", "root", "sa_database");
+            $db = new mysqli("localhost", "root", "", "sa_database");
             if (mysqli_connect_errno()) {
                 printf("Connection failed: %s\n", mysqli_connect_error());
                 exit();
@@ -44,9 +46,10 @@ and open the template in the editor.
             
             if(!($result1 = $befehl1->fetch_object()) || !($result2 = $befehl2->fetch_object())) {
                 echo "<a>Unknown start and/or destination.</a>";
-                echo '<br><br>';
-                echo '<a id="home" href="index.php">home</a><br>';
-                echo '<a id="back" href="addroute.php">back</a><br>';
+                echo '<div class="links3">';
+                echo '<a id="home" href="index.php">home</a>';
+                echo '<a id="back" href="addroute.php">back</a>';
+                echo '</div>';
                 exit;
             }
             $start = $result1->name;
@@ -96,7 +99,10 @@ and open the template in the editor.
             <input type="submit" value="Add New Route">
         </form>
         
-        
-        
+        <div class="links3">
+        <a id="home" href="index.php">home</a>
+        <a id="back" href="addroute.php">back</a>
+        </div>
+        </div>
     </body>
 </html>

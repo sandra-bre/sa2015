@@ -11,6 +11,7 @@ and open the template in the editor.
         <title>Adding Route</title>
     </head>
     <body>
+        <div class="main_window">
         <?php
             $stops = unserialize(base64_decode(urldecode($_GET['stops'])));
             $name = $_GET["name"];
@@ -65,5 +66,6 @@ and open the template in the editor.
         ?>
         <br>
         <a id="home" href="index.php">home</a>
+        </div>
     </body>
 </html>
