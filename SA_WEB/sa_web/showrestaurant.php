@@ -77,7 +77,7 @@ and open the template in the editor.
             $sql .= "longitude < " . ($lon + $distance/(111111 * cos($lat * (180/M_PI)))) . " AND ";
             $sql .= "longitude > " . ($lon - $distance/(111111 * cos($lat * (180/M_PI)))) . " AND ";
             $sql .= "latitude < " . ($lat + $distance/111111) . " AND ";
-            $sql .= "latitude > " . ($lat - $distance/111111);
+            $sql .= "latitude > " . ($lat - $distance/111111) . " ORDER BY name";
             
             $befehl = $db->query($sql);
             
