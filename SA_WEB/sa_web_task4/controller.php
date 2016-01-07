@@ -95,9 +95,3 @@
     }
 
 ?>
-
-<sript>
-    function editStopByID(id) {
-        $('#test').alert("hello");
-    }
-</script>
