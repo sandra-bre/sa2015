@@ -54,7 +54,7 @@
                 echo '<td>' . $name . '</td>';
                 echo '</tr>';
                 
-                $sql .= "name LIKE '%" . $name . "%'";
+                $sql .= "name LIKE '%" . mysqli_real_escape_string($db, $name) . "%'";
                 $bool = true;
             }
             if($lat != ""){
@@ -70,7 +70,7 @@
                 if (strcmp($lattype, $ex) == 0) { $sql .= "= '"; }
                 else if (strcmp($lattype, $be)) { $sql .= "> '"; }
                 else if (strcmp($lattype, $ab)) { $sql .= "< '"; }
-                $sql .= $lat . "'";
+                $sql .= mysqli_real_escape_string($db, $lat) . "'";
                 $bool = true;
             }
             if($lon != ""){
@@ -86,7 +86,7 @@
                 if (strcmp($lontype, $ex) == 0) { $sql .= "= '"; }
                 else if (strcmp($lontype, $be)) { $sql .= "> '"; }
                 else if (strcmp($lontype, $ab)) { $sql .= "< '"; }
-                $sql .= $lon . "'";
+                $sql .= mysqli_real_escape_string($db, $lon) . "'";
                 $bool = true;
             }
             echo '</table>';

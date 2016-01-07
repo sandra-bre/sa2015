@@ -38,11 +38,11 @@ and open the template in the editor.
                 exit();
             }
 
-            $sql = "SELECT DISTINCT name FROM task1 WHERE name LIKE '%" . $start . "%'";
+            $sql = "SELECT DISTINCT name FROM task1 WHERE name LIKE '%" . mysqli_real_escape_string($db, $start) . "%'";
             $befehl1 = $db->query($sql);
             
             
-            $sql = "SELECT DISTINCT name FROM task1 WHERE name LIKE '%" . $dest . "%'";
+            $sql = "SELECT DISTINCT name FROM task1 WHERE name LIKE '%" . mysqli_real_escape_string($db, $dest) . "%'";
             $befehl2 = $db->query($sql);
             
             if(!($result1 = $befehl1->fetch_object()) || !($result2 = $befehl2->fetch_object())) {
@@ -71,10 +71,10 @@ and open the template in the editor.
         <?php    
             $sql = "SELECT r.name FROM (SELECT route_id, m.stop_id ";
             $sql .= "FROM task1 t2 INNER JOIN mapping m ON (t2.id = m.stop_id) ";
-            $sql .= "WHERE t2.name = '" . $start . "') t1 ";
+            $sql .= "WHERE t2.name = '" . mysqli_real_escape_string($db, $start) . "') t1 ";
             $sql .= "INNER JOIN (SELECT route_id ";
             $sql .= "FROM task1 t3 INNER JOIN mapping m ON (t3.id = m.stop_id) ";
-            $sql .= "WHERE t3.name = '" . $dest . "' ) t2 ON(t1.route_id = t2.route_id) ";
+            $sql .= "WHERE t3.name = '" . mysqli_real_escape_string($db, $dest) . "' ) t2 ON(t1.route_id = t2.route_id) ";
             $sql .= "INNER JOIN routes r ON(r.route_id = t2.route_id)";
                         
             $befehl = $db->query($sql);
@@ -82,16 +82,11 @@ and open the template in the editor.
             echo '<table class="data"><tr><th>Name</th></tr>';
             
             while ($result = $befehl->fetch_object()) {
-                echo "<tr><td>"; echo $result->name; echo "</tr></td>";
+                echo "<tr><td>" . $result->name . "</tr></td>";
             }
             echo "</table>";
             
             $db->close();
-                
-            
         ?>
-        
-        
-        
     </body>
 </html>

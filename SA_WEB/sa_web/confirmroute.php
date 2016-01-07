@@ -38,10 +38,10 @@ and open the template in the editor.
                 exit();
             }
             
-            $sql = "SELECT DISTINCT name FROM task1 WHERE name LIKE '%" . $start . "%'";
+            $sql = "SELECT DISTINCT name FROM task1 WHERE name LIKE '%" . mysqli_real_escape_string($db, $start) . "%'";
             $befehl1 = $db->query($sql);
             
-            $sql = "SELECT DISTINCT name FROM task1 WHERE name LIKE '%" . $dest . "%'";
+            $sql = "SELECT DISTINCT name FROM task1 WHERE name LIKE '%" . mysqli_real_escape_string($db, $dest) . "%'";
             $befehl2 = $db->query($sql);
             
             if(!($result1 = $befehl1->fetch_object()) || !($result2 = $befehl2->fetch_object())) {
@@ -58,7 +58,7 @@ and open the template in the editor.
             $i = 0;
             $j = 0;
             while($i < count($stops)) {
-                $sql = "SELECT DISTINCT name FROM task1 WHERE name LIKE '%" . trim($stops[$i]) . "%'";
+                $sql = "SELECT DISTINCT name FROM task1 WHERE name LIKE '%" . mysqli_real_escape_string($db, trim($stops[$i])) . "%'";
                 $befehl = $db->query($sql);
                 $result = $befehl->fetch_object();
                 if($result) {
@@ -72,24 +72,24 @@ and open the template in the editor.
         
         <form id="addroute" method="get" action="routeOK.php">
             <a>Route Name:</a><br>
-            <?php echo "<a>"; echo $name; echo "</a>";
+            <?php echo "<a>" . $name . "</a>";
             echo '<input type="hidden" name="name" value="' . $name . '">'?>
             <br><br>
             
             <a>Start:</a><br>
-            <?php echo "<a>"; echo $start; echo "</a>";
+            <?php echo "<a>" . $start . "</a>";
             echo '<input type="hidden" name="start" value="' . $start . '">'?>
             <br><br>
             
             <a>Destination:</a><br>
-            <?php echo "<a>"; echo $dest; echo "</a>";
+            <?php echo "<a>" . $dest . "</a>";
             echo '<input type="hidden" name="dest" value="' . $dest . '">'?>
             <br><br>
             
             <a>Stops:</a><br>
             <?php
                 for($i = 0; $i < count($sstops); $i++){
-                    echo "<a>"; echo $sstops[$i]; echo "</a><br>";
+                    echo "<a>" . $sstops[$i] . "</a><br>";
                 }
                 $tmp=urlencode(base64_encode(serialize($sstops)));
                 echo '<input name="stops" type="hidden" value="' . $tmp . '">';

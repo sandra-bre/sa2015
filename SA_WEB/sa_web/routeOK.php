@@ -29,36 +29,40 @@ and open the template in the editor.
             $result = $befehl->fetch_object();
             $id = $result->id; $id++;
             
-            $sql = "INSERT INTO routes (route_id, name) VALUES ('" . $id . "', '";
-            $sql .= $name . ": " . $start . " => " . $dest . "')";
+            $sql = "INSERT INTO routes (route_id, name) VALUES ('" . mysqli_real_escape_string($db, $id) . "', '";
+            $sql .= mysqli_real_escape_string($db, $name) . ": " . mysqli_real_escape_string($db, $start) . " => ";
+            $sql .= mysqli_real_escape_string($db, $dest) . "')";
             if($db->query($sql) === true) {
                 echo "<a>Creating route successfully.</a><br>";
             }
             
-            $sql =  "SELECT id FROM task1 where name='" . $start . "'";
+            $sql =  "SELECT id FROM task1 where name='" . mysqli_real_escape_string($db, $start) . "'";
             $befehl = $db->query($sql);
             $result = $befehl->fetch_object();
             $tmp = $result->id;
-            $sql = "INSERT INTO mapping (route_id, stop_id) VALUES (".$id.",".$tmp. ")";
+            $sql = "INSERT INTO mapping (route_id, stop_id) VALUES (". mysqli_real_escape_string($db, $id) .",";
+            $sql .= mysqli_real_escape_string($db, $tmp) . ")";
             if($db->query($sql) === true) {
                 echo "<a>Adding " . $start . " successfully.</a><br>";
             }
             
-            $sql =  "SELECT id FROM task1 where name='" . $dest . "'";
+            $sql =  "SELECT id FROM task1 where name='" . mysqli_real_escape_string($db, $dest) . "'";
             $befehl = $db->query($sql);
             $result = $befehl->fetch_object();
             $tmp = $result->id;
-            $sql = "INSERT INTO mapping (route_id, stop_id) VALUES (".$id.",".$tmp. ")";
+            $sql = "INSERT INTO mapping (route_id, stop_id) VALUES (". mysqli_real_escape_string($db, $id) . ",";
+            $sql .= mysqli_real_escape_string($db, $tmp) . ")";
             if($db->query($sql) === true) {
                 echo "<a>Adding " . $dest . " successfully.</a><br>";
             }
             
             for($i = 0; $i < count($stops); $i++) {
-                $sql =  "SELECT id FROM task1 where name='" . $stops[$i] . "'";
+                $sql =  "SELECT id FROM task1 where name='" . mysqli_real_escape_string($db, $stops[$i]) . "'";
                 $befehl = $db->query($sql);
                 $result = $befehl->fetch_object();
                 $tmp = $result->id;
-                $sql = "INSERT INTO mapping (route_id, stop_id) VALUES (".$id.",".$tmp. ")";
+                $sql = "INSERT INTO mapping (route_id, stop_id) VALUES (" . mysqli_real_escape_string($db, $id);
+                $sql .= "," . mysqli_real_escape_string($db, $tmp) . ")";
                 if($db->query($sql) === true) {
                     echo "<a>Adding " . $stops[$i] . " successfully.</a><br>";
                 }

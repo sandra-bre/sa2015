@@ -19,6 +19,11 @@
         <form method="post" action="addroute.php">
             <input type="submit" value="Add New Route">
         </form>
+        
+        <form method="post" action="searchrestaurant.php">
+            <input type="submit" value="Search Restaurant">
+        </form>
+        
         </div>
         
     </body>
