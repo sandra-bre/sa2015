@@ -57,10 +57,12 @@ and open the template in the editor.
             echo "<table><tr><td>Start</td><td>" . $start . "</td></tr>";
             echo "<tr><td>Destination</td><td>" . $dest . "</td></tr></table>";
         ?>
+        
         <br>
         <a id="back" href="searchconnection.php">back</a><br>
         <a id="home" href="index.php">home</a>  
         <br><br>
+        
         <?php    
             $sql = "SELECT r.name FROM (SELECT route_id, m.stop_id ";
             $sql .= "FROM task1 t2 INNER JOIN mapping m ON (t2.id = m.stop_id) ";
