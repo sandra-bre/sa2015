@@ -44,6 +44,12 @@
         
         <h4>Your Search Criteria:</h4>
         <?php 
+            $db = new mysqli("localhost", "root", "", "sa_database");
+            if (mysqli_connect_errno()) {
+                printf("Connection failed: %s\n", mysqli_connect_error());
+                exit();
+            }
+            
             $sql = "SELECT * FROM task1 where ";
             $bool = false;
             
@@ -99,12 +105,6 @@
         ?>
         
         <?php
-            $db = new mysqli("localhost", "root", "", "sa_database");
-            if (mysqli_connect_errno()) {
-                printf("Connection failed: %s\n", mysqli_connect_error());
-                exit();
-              }
-
             $befehl = $db->query($sql);
             
             echo '<table class="data">';
