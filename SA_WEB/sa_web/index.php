@@ -5,6 +5,7 @@
         <title>Routenator</title>
     </head>
     <body>
+        <div class="main_window">
         <h1>Routenator</h1>
         
         <form method="post" action="searchstop.php">
@@ -18,6 +19,7 @@
         <form method="post" action="addroute.php">
             <input type="submit" value="Add New Route">
         </form>
+        </div>
         
     </body>
 </html>

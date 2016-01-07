@@ -11,6 +11,7 @@ and open the template in the editor.
         <title>Routenator - Search Stop</title>
     </head>
     <body>
+        <div class="main_window">
         <h1>Search Stop</h1>
         
         
@@ -37,6 +38,7 @@ and open the template in the editor.
         </form>
         
         <a id="home" href="index.php">home</a>
+        </div>
     </body>
 </html>
 

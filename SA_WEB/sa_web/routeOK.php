@@ -11,13 +11,14 @@ and open the template in the editor.
         <title>Adding Route</title>
     </head>
     <body>
+        <div class="main_window">
         <?php
             $stops = unserialize(base64_decode(urldecode($_GET['stops'])));
             $name = $_GET["name"];
             $start = $_GET["start"];
             $dest = $_GET["dest"];
             
-            $db = new mysqli("localhost", "root", "root", "sa_database");
+            $db = new mysqli("localhost", "root", "", "sa_database");
             if (mysqli_connect_errno()) {
                 printf("Connection failed: %s\n", mysqli_connect_error());
                 exit();
@@ -65,5 +66,6 @@ and open the template in the editor.
         ?>
         <br>
         <a id="home" href="index.php">home</a>
+        </div>
     </body>
 </html>
