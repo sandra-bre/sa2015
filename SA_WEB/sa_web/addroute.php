@@ -30,7 +30,7 @@ and open the template in the editor.
             <a>Stops:</a><br>
             <input type="text" name="rstops">
             <br>
-            Seperate Stops with Semikolon.
+            Seperate stops with semicolon.
             <br><br>
             
             <input type="submit" value="Add New Route">

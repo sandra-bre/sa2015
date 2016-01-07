@@ -78,20 +78,41 @@
             }
             $sql = "SELECT * FROM task1 where name LIKE '%" . mysqli_real_escape_string($db, $name) . "%'";
 
-            echo '<table class="clickabletable>';
-            echo '<tr><th>Name</th>';
+            echo '<table class="clickabletable">';
+            echo '<tr><th></th><th>Name</th>';
             echo '<th>Latitude</th>';
             echo '<th>Longitude</th></tr>';
             
             $befehl = $db->query($sql);
             while($resultat = $befehl->fetch_object()) {
-               // echo '<tr><td><input type="button" name="stopid" onclick="editStopByID(' . $resultat->id . ')">edit';
+                echo "<td><button onclick=\"editstop('" . $resultat->id . "', '" . $resultat->name . "', '" . $resultat->latitude
+                        . "', '" . $resultat->longitude . "')\">edit</button></td>";
                 echo '<td>' . $resultat->name . '</td>';
                 echo '<td>' . $resultat->latitude . '</td>';
                 echo '<td>' . $resultat->longitude . '</td></tr>';
             }
             echo '</table>';
             break;
+            
+        case 3:
+            $id = $_GET['id'];
+            $stop = $_GET['name'];
+            $lat = $_GET['lat'];
+            $lon = $_GET['lon'];
+            $ok = 1;
+            
+            while($ok) {
+                echo '<form method="GET">';
+                echo '<a>Stopname:</a>';
+                echo '<input type="text" id="name" value="' . $stop . '"><br>';
+                echo '<a>Latitude:</a>';
+                echo '<input type="text" id="name" value="' . $lat . '"><br>';
+                echo '<a>Longitude:</a>';
+                echo '<input type="text" id="name" value="' . $lon . '"><br>';
+                echo '</form>';
+                break;
+               
+            }
+              
+            break;
     }
-
-?>

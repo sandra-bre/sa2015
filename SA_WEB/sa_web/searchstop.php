@@ -27,7 +27,7 @@ and open the template in the editor.
             <input type="radio" name="lattype" value="below"><label for="latbelow">below</label>
             <br><br>
             
-            <a>Longidute:</a><br>
+            <a>Longitude:</a><br>
             <input type="text" name="lonvalue"><br>
             <input type="radio" name="lontype" value="exact" checked="checked"><label for="lonexact">exact</label>
             <input type="radio" name="lontype" value="above"><label for="lonabove">above</label>

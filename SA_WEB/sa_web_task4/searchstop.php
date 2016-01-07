@@ -34,7 +34,7 @@ and open the template in the editor.
             </div>
             
             <div class="search_point">
-            <a>Longitute:</a><br>
+            <a>Longitude:</a><br>
             <input type="text" name="lonvalue"><br>
             <input type="radio" name="lontype" value="exact" checked="checked"><label for="lonexact">exact</label>
             <input type="radio" name="lontype" value="above"><label for="lonabove">above</label>
