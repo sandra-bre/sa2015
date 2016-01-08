@@ -21,7 +21,7 @@ and open the template in the editor.
             
         </div>
         
-        <div id="editstop"></div>
+        <div id="editstop">haha</div>
         <div id="stops"></div>
     </body>
 </html>
@@ -39,7 +39,7 @@ and open the template in the editor.
                 
     });
     
-    function editstop(id) {
+    function editstop(id, stopname, stoplat, stoplon) {
         $('#editstop').load('controller.php?f=3&id=' + id + '&name=' + stopname + '&lat=' + stoplat + '&lon=' + stoplon);
     }
 </script>

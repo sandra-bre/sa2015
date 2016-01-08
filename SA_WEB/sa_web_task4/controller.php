@@ -85,7 +85,8 @@
             
             $befehl = $db->query($sql);
             while($resultat = $befehl->fetch_object()) {
-                echo "<td><button onclick=\"editstop('" . $resultat->id . "')\">edit</button></td>";
+                echo "<td><button onclick=\"editstop('" . $resultat->id . "', '" . $resultat->name . "', '" . $resultat->latitude
+                        . "', '" . $resultat->longitude . "')\">edit</button></td>";
                 echo '<td>' . $resultat->name . '</td>';
                 echo '<td>' . $resultat->latitude . '</td>';
                 echo '<td>' . $resultat->longitude . '</td></tr>';
@@ -101,7 +102,15 @@
             $ok = 1;
             
             while($ok) {
-              echo '<form method="GET">';
+                echo '<form method="GET">';
+                echo '<a>Stopname:</a>';
+                echo '<input type="text" id="name" value="' . $stop . '"><br>';
+                echo '<a>Latitude:</a>';
+                echo '<input type="text" id="name" value="' . $lat . '"><br>';
+                echo '<a>Longitude:</a>';
+                echo '<input type="text" id="name" value="' . $lon . '"><br>';
+                echo '</form>';
+                break;
                
             }
               
@@ -109,13 +118,6 @@
     }
 
 ?>
-<script>
-
-    function editstop(id) {
-        var hello = prompt("hello", "du");
-    }
-
-</script>
 
 
 
