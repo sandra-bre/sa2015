@@ -11,30 +11,35 @@ and open the template in the editor.
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <title>Routenator - Search Restaurant</title>
     </head>
-    <body>
-        <div class="main_window">
+    <body class="result_map">
+        <div class="top_bar">
             <h1>Search Restaurant</h1>
+            
+            <a id="home" href="index.php">home</a>
+        </div>
 
             <form id="searchRestaurant" method="post" autocomplete="off">
+            <div class="search_bar">
+                <div class="search_name">
                 <a>Stopname:</a><br>
                 <div class="input_container">
                 <input type="text" id="stopname" >
                 <ul id="stopnameList"></ul>
                 <br>
                 </div>
+                </div>
 
-                <a>Distance: (in meter)</a>
+                <div class="search_name">
+                <a>Distance: (in meter)</a><br/>
                 <input type="text" name="distance">
-                <br>
+                </div>
                 
                 <input type="button" value="Search Restaurant" onclick="getdata()">
+            </div>
             </form>
-            
-            <a id="home" href="index.php">home</a>
-          
-        </div>
         
         <div id="results"></div>
+        <div id="map"></div>
     </body>
 </html>
 
