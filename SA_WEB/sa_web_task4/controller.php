@@ -65,16 +65,17 @@
             echo '<th>Latitude</th>';
             echo '<th>Longitude</th></tr>';
             
-            $superstring = '<script type="text/javascript"> 
-                var map;
-                function initMap() {';
+            $superstring = "";
             
             if($resultat = $befehl->fetch_object()) {
                 echo '<tr><td>' . $resultat->name . '</td>';
                 echo '<td>' . $resultat->latitude . '</td>';
                 echo '<td>' . $resultat->longitude . '</td></tr>';
                 
-                $superstring .= '
+                $superstring .= '<script type="text/javascript"> 
+                var map;
+                function initMap() {
+                
                 map = new google.maps.Map(document.getElementById("map"), {
                     center: {lat: ' . $resultat->latitude . ', lng: ' . $resultat->longitude . '},
                     zoom: 13
@@ -86,12 +87,6 @@
                     title: "' . $resultat->name . 
                 '"});';
                 
-            }
-            else {
-                $superstring .= 'map = new google.maps.Map(document.getElementById("map"), {
-                    center: {lat: 47.0674802, lng: 15.4425893},
-                    zoom: 13
-                });';
             }
             
             
@@ -326,18 +321,70 @@
                     
                     $sql = "UPDATE routes SET name='" . mysqli_real_escape_string($db, $name); 
                     $sql .= "' WHERE route_id='" . mysqli_real_escape_string($db, $id) . "'";
-                    echo $sql;
+                    
                     $befehl = $db->query($sql);
                     $db->close();
                     
                     break;
                 
                 case 1: //start
+                    $oldstart = $_GET['old'];
+                    $newstart = $_GET['new'];
+                    $routename = $_GET['name'];
                     
+                    $sql = "SELECT DISTINCT id FROM task1 WHERE name = '" . mysqli_real_escape_string($db, $oldstart) . "'";
+                    $befehlold = $db->query($sql);
+                    
+                    $sql = "SELECT DISTINCT id, name FROM task1 WHERE name LIKE '%" . mysqli_real_escape_string($db, $newstart) . "%'";
+                    $befehlnew = $db->query($sql);
+                    if(($resultold = $befehlold->fetch_object()) && ($resultnew = $befehlnew->fetch_object())) {
+                        $oldid = $resultold->id;
+                        $newid = $resultnew->id;
+                        $newname = $resultnew->name;
+                    }
+                    else {
+                        break;
+                    }
+                    $sql = "UPDATE mapping SET stop_id='" . $newid . "' WHERE route_id='" . $id . "' AND stop_id='" . $oldid . "'";
+                    if($db->query($sql) === true) { echo "stop successful"; }
+                    $tmp = explode(": ", $routename);
+                    $name = $tmp[0] . ": ";
+                    $name .= $newname . " => ";
+                    $tmp1 = explode(" => ", $tmp[1]);
+                    $name .= $tmp1[1];
+                    
+                    $sql = "UPDATE routes SET name='" . mysqli_real_escape_string($db, $name); 
+                    $sql .= "' WHERE route_id='" . mysqli_real_escape_string($db, $id) . "'";
+                    if($db->query($sql) === true) { echo "name successful"; }
                     break;
                 
                 case 2: //dest
+                    $olddest = $_GET['old'];
+                    $newdest = $_GET['new'];
+                    $routename = $_GET['name'];
                     
+                    $sql = "SELECT DISTINCT id FROM task1 WHERE name = '" . mysqli_real_escape_string($db, $olddest) . "'";
+                    $befehlold = $db->query($sql);
+                    
+                    $sql = "SELECT DISTINCT id, name FROM task1 WHERE name LIKE '%" . mysqli_real_escape_string($db, $newdest) . "%'";
+                    $befehlnew = $db->query($sql);
+                    if(($resultold = $befehlold->fetch_object()) && ($resultnew = $befehlnew->fetch_object())) {
+                        $oldid = $resultold->id;
+                        $newid = $resultnew->id;
+                        $newname = $resultnew->name;
+                    }
+                    else {
+                        break;
+                    }
+                    $sql = "UPDATE mapping SET stop_id='" . $newid . "' WHERE route_id='" . $id . "' AND stop_id='" . $oldid . "'";
+                    if($db->query($sql) === true) { echo "stop successful"; }
+                    $tmp = explode("=> ", $routename);
+                    $name = $tmp[0] . "=> ";
+                    $name .= $newname;
+                    
+                    $sql = "UPDATE routes SET name='" . mysqli_real_escape_string($db, $name); 
+                    $sql .= "' WHERE route_id='" . mysqli_real_escape_string($db, $id) . "'";
+                    if($db->query($sql) === true) { echo "name successful"; }
                     break;
             }
                 

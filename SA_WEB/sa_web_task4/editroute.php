@@ -63,23 +63,22 @@ and open the template in the editor.
         var route = name.split(": ");
         var stop = route[1];
         var stop = stop.split(" => ");
-        
-        
+                
         var start = prompt("Start:", stop[0]);
-        
-        start = start.replace(" ", "+");
-        name = name.replace(" ", "+");
-        $('#edit').load('controller.php?f=7&id=' + id + '&type=1' + '&old=' + name + '&new=' + start);
+        stopsready = stop[0].split(" ").join("+");
+        start = start.split(" ").join("+");
+        name = name.split(" ").join("+");
+        $('#edit').load('controller.php?f=7&id=' + id + '&type=1' + '&old=' + stopsready + '&new=' + start + '&name=' + name);
     }
     
     function editroutedest(id, name) {
         var route = name.split("=> ");
         
-        var dest = prompt("Start:", route[1]);
-        
-        dest = dest.replace(" ", "+");
-        name = name.replace(" ", "+");
-        $('#edit').load('controller.php?f=7&id=' + id + '&type=2' + '&old=' + name + '&new=' + dest);
+        var dest = prompt("Destination:", route[1]);
+        stopsready = route[1].split(" ").join("+");
+        dest = dest.split(" ").join("+");
+        name = name.split(" ").join("+");
+        $('#edit').load('controller.php?f=7&id=' + id + '&type=2' + '&old=' + stopsready + '&new=' + dest + '&name=' + name);
     }
     
     function editroutestops(id) {
