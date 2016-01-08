@@ -61,11 +61,48 @@
             echo '<th>Latitude</th>';
             echo '<th>Longitude</th></tr>';
             
+            $superstring = "";
+            
+            if($resultat = $befehl->fetch_object()) {
+                echo '<tr><td>' . $resultat->name . '</td>';
+                echo '<td>' . $resultat->latitude . '</td>';
+                echo '<td>' . $resultat->longitude . '</td></tr>';
+                
+                $superstring .= '<script type="text/javascript"> 
+                var map;
+                function initMap() {
+                
+                map = new google.maps.Map(document.getElementById("map"), {
+                    center: {lat: ' . $resultat->latitude . ', lng: ' . $resultat->longitude . '},
+                    zoom: 13
+                });
+
+                new google.maps.Marker({
+                    position: {lat: ' . $resultat->latitude . ', lng: ' . $resultat->longitude . '},
+                    map: map,
+                    title: "' . $resultat->name . 
+                '"});';
+                
+            }
+            
+            
+            
             while($resultat = $befehl->fetch_object()) { 
                 echo '<tr><td>' . $resultat->name . '</td>';
                 echo '<td>' . $resultat->latitude . '</td>';
                 echo '<td>' . $resultat->longitude . '</td></tr>';
+                $superstring .= 'new google.maps.Marker({
+                    position: {lat: ' . $resultat->latitude . ', lng: ' . $resultat->longitude . '},
+                    map: map,
+                    title: "' . $resultat->name . 
+                '"});';
             }
+            $superstring .= '}
+                </script>
+                <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKdI4C7gQzK9jZi9Po9BZaBKwSe1FTcZE&callback=initMap">
+                </script>';
+            echo $superstring;
             break;
             
         case 2:
