@@ -43,6 +43,7 @@ and open the template in the editor.
         name = name.replace(" ", "+");
         $('#editstop').load('controller.php?f=3&id=' + id + '&var=' + name + '&type=name');
     }
+    
     function editstoplat(id, lat) {
         var latitude = prompt("Latitude:", lat);
         latitude = latitude.replace(",", ".");
@@ -63,10 +64,5 @@ and open the template in the editor.
             $('#editstop').load('controller.php?f=3&id=' + id + '&var=' + longitude + '&type=longitude');
         }
     }
-    
-    function editOK(id, stopname, stoplat, stoplon) {
-        $('#editstop').load('controller.php?f=4&id=' + id + '&name=' + stopname + '&lat=' + stoplat + '&lon=' + stoplon);
-    }
-    
     
 </script>

@@ -29,7 +29,7 @@ and open the template in the editor.
             
         </div>
         
-        <div id="editroute"></div>
+        <div id="edit"></div>
         <div id="route"></div>
     </body>
 </html>
@@ -51,24 +51,35 @@ and open the template in the editor.
     });
     
     function editroutename(id, name) {
-        var route = name.split(":");
+        var route = name.split(": ");
         var tmp = prompt("Routename:", route[0]);
-        
-        tmp += ":";
-        
+        tmp += ": ";
         for(var i = 1; route[i]; i++) { tmp += route[i]; }
-        alert(tmp);
-        
-        name = name.replace(" ", "+");
-        $('#editstop').load('controller.php?f=3&id=' + id + '&var=' + name + '&type=name')
+        name = tmp.split(" ").join("+");
+        $('#edit').load('controller.php?f=7&id=' + id + '&type=0' + '&name=' + name);
     };
     
-    function editroutestart(id) {
-        alert("start " + id);
+    function editroutestart(id, name) {
+        var route = name.split(": ");
+        var stop = route[1];
+        var stop = stop.split(" => ");
+        
+        
+        var start = prompt("Start:", stop[0]);
+        
+        start = start.replace(" ", "+");
+        name = name.replace(" ", "+");
+        $('#edit').load('controller.php?f=7&id=' + id + '&type=1' + '&old=' + name + '&new=' + start);
     }
     
-    function editroutedest(id) {
-        alert("dest " + id);
+    function editroutedest(id, name) {
+        var route = name.split("=> ");
+        
+        var dest = prompt("Start:", route[1]);
+        
+        dest = dest.replace(" ", "+");
+        name = name.replace(" ", "+");
+        $('#edit').load('controller.php?f=7&id=' + id + '&type=2' + '&old=' + name + '&new=' + dest);
     }
     
     function editroutestops(id) {

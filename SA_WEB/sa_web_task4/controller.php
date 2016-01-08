@@ -6,7 +6,7 @@
             echo "testing...";
             break;
         
-        case 1:
+        case 1: //searchstop - search stops and display map
             $name = $_GET["name"];
             $lat = $_GET["latvalue"];
             $lattype = $_GET["lattype"];
@@ -109,7 +109,7 @@
             echo $superstring;
             break;
             
-        case 2:
+        case 2: //editstop - search stops
             $name = $_GET["name"];
             
             $db = new mysqli("localhost", "root", "", "sa_database");
@@ -136,7 +136,7 @@
             echo '</table>';
             break;
             
-        case 3:
+        case 3: //editstop - update database
             $id = $_GET['id'];
             $var = $_GET['var'];
             $type = $_GET['type'];
@@ -154,7 +154,7 @@
             $db->close();
             break;
         
-        case 4:
+        case 4: //editstop - dropdown
             $name = $_GET['name'];
             
             $db = new mysqli("localhost", "root", "", "sa_database");
@@ -170,7 +170,7 @@
             }
             break;
             
-        case 5:
+        case 5: //search restaurant - search restaurants
             $stop = $_GET["stopname"];
             $distance = $_GET["distance"];
             
@@ -219,7 +219,7 @@
             
             break;
             
-        case 6:
+        case 6: //editroute - search route
             $name = $_GET['name'];
             $start = $_GET['start'];
             $dest = $_GET['dest'];
@@ -273,9 +273,9 @@
             
             while ($resultat = $befehl->fetch_object()) {
                 echo "<tr><td><button onclick=\"editroutename('" . $resultat->route_id . "', '" . $resultat->name . "')\">Name</button>";
-                echo "<button onclick=\"editroutestart('" . $resultat->route_id . "')\">Start</button>";
-                echo "<button onclick=\"editroutedest('" . $resultat->route_id . "')\">Destination</button>";
-                echo "<button onclick=\"editroutestops('" . $resultat->route_id . "')\">Stops</button></td>";
+                echo "<button onclick=\"editroutestart('" . $resultat->route_id . "', '" . $resultat->name . "')\">Start</button>";
+                echo "<button onclick=\"editroutedest('" . $resultat->route_id . "', '" . $resultat->name . "')\">Destination</button>";
+                echo "<button onclick=\"editroutestops('" . $resultat->route_id . "', '" . $resultat->name . "')\">Stops</button></td>";
                 echo "<td>" . $resultat->name . "</td></tr>";
             }
             echo "</table>";
@@ -284,8 +284,38 @@
             
             break;
             
-        case 7:
+        case 7: //editroute - update database
+            $type = $_GET['type'];
+            $id = $_GET['id'];
             
+            $db = new mysqli("localhost", "root", "", "sa_database");
+            if (mysqli_connect_errno()) {
+                printf("Connection failed: %s\n", mysqli_connect_error());
+                exit();
+            }
+            
+            switch ($type) {
+                case 0: //name
+                    $name = $_GET['name'];
+                    
+                    $sql = "UPDATE routes SET name='" . mysqli_real_escape_string($db, $name); 
+                    $sql .= "' WHERE route_id='" . mysqli_real_escape_string($db, $id) . "'";
+                    echo $sql;
+                    $befehl = $db->query($sql);
+                    $db->close();
+                    
+                    break;
+                
+                case 1: //start
+                    
+                    break;
+                
+                case 2: //dest
+                    
+                    break;
+            }
+                
+                
             break;
     }
 
