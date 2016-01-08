@@ -346,7 +346,7 @@
                         break;
                     }
                     $sql = "UPDATE mapping SET stop_id='" . $newid . "' WHERE route_id='" . $id . "' AND stop_id='" . $oldid . "'";
-                    if($db->query($sql) === true) { echo "stop successful"; }
+                    if($db->query($sql) === true) { }
                     $tmp = explode(": ", $routename);
                     $name = $tmp[0] . ": ";
                     $name .= $newname . " => ";
@@ -355,7 +355,7 @@
                     
                     $sql = "UPDATE routes SET name='" . mysqli_real_escape_string($db, $name); 
                     $sql .= "' WHERE route_id='" . mysqli_real_escape_string($db, $id) . "'";
-                    if($db->query($sql) === true) { echo "name successful"; }
+                    if($db->query($sql) === true) { }
                     break;
                 
                 case 2: //dest
@@ -377,14 +377,14 @@
                         break;
                     }
                     $sql = "UPDATE mapping SET stop_id='" . $newid . "' WHERE route_id='" . $id . "' AND stop_id='" . $oldid . "'";
-                    if($db->query($sql) === true) { echo "stop successful"; }
+                    if($db->query($sql) === true) { }
                     $tmp = explode("=> ", $routename);
                     $name = $tmp[0] . "=> ";
                     $name .= $newname;
                     
                     $sql = "UPDATE routes SET name='" . mysqli_real_escape_string($db, $name); 
                     $sql .= "' WHERE route_id='" . mysqli_real_escape_string($db, $id) . "'";
-                    if($db->query($sql) === true) { echo "name successful"; }
+                    if($db->query($sql) === true) { }
                     break;
             }
                 
