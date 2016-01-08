@@ -290,7 +290,7 @@
                     
             $befehl = $db->query($sql);
             
-            echo '<table class="data"><tr><th>Edit</th><th>Name</th></tr>';
+            echo '<table class="clickabletable2"><tr><th>Edit</th><th>Name</th></tr>';
             
             while ($resultat = $befehl->fetch_object()) {
                 echo "<tr><td><button onclick=\"editroutename('" . $resultat->route_id . "', '" . $resultat->name . "')\">Name</button>";

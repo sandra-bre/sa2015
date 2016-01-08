@@ -11,21 +11,28 @@ and open the template in the editor.
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <title>Routenator - Edit Route</title>
     </head>
-    <body>
-        <div>
+    <body class="edit">
+        <div class="top_bar">
             <h1>Edit an Existing Route</h1>
             
+            <a id="home" href="index.php">home</a>
+        </div>
             <form method="get">
-                <a>Routename:</a>
+                <div class="search_bar">
+                <div>
+                <a>Routename:</a><br/>
                 <input type="text" id="routename">
-                <br>
-                <a>Start:</a>
+                </div>
+                <div>
+                <a>Start:</a><br/>
                 <input type="text" id="start">
-                <br>
-                <a>Destination:</a>
+                </div>
+                <div>
+                <a>Destination:</a><br/>
                 <input type="text" id="dest">
+                </div>
+                </div>
             </form>
-            
             
         </div>
         

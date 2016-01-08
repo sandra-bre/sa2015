@@ -11,15 +11,15 @@ and open the template in the editor.
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <title>Routenator - Edit Stop</title>
     </head>
-    <body>
-        <div>
+    <body class="edit">
             <h1>Edit an Existing Stop</h1>
             
             <form method="get">
                 <input type="text" name="stopname">
             </form> <!-- button wie input button value=stopid-->
             
-        </div>
+            <a id="home" href="index.php">home</a>
+            
         
         <div id="editstop"></div>
         <div id="stops"></div>
