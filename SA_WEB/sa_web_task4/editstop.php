@@ -21,7 +21,7 @@ and open the template in the editor.
             
         </div>
         
-        <div id="editstop">haha</div>
+        <div id="editstop"></div>
         <div id="stops"></div>
     </body>
 </html>
@@ -35,11 +35,38 @@ and open the template in the editor.
             
             $('#stops').load('controller.php?f=2&name=' + name);
         }, 1000);
-        
-                
+             
     });
     
-    function editstop(id, stopname, stoplat, stoplon) {
-        $('#editstop').load('controller.php?f=3&id=' + id + '&name=' + stopname + '&lat=' + stoplat + '&lon=' + stoplon);
+    function editstopname(id, stopname) {
+        var name = prompt("Stopname:", stopname);
+        name = name.replace(" ", "+");
+        $('#editstop').load('controller.php?f=3&id=' + id + '&var=' + name + '&type=name');
     }
+    function editstoplat(id, lat) {
+        var latitude = prompt("Latitude:", lat);
+        latitude = latitude.replace(",", ".");
+        if(isNaN(latitude)) {
+            alert("Latitude must be a number.");
+        }
+        else {
+            $('#editstop').load('controller.php?f=3&id=' + id + '&var=' + latitude + '&type=latitude');
+        }
+    }
+    function editstoplon(id, lon) {
+        var longitude = prompt("Longitude:", lon);
+        longitude = longitude.replace(",", ".");
+        if(isNaN(longitude)) {
+            alert("Longitude must be a number.");
+        }
+        else {
+            $('#editstop').load('controller.php?f=3&id=' + id + '&var=' + longitude + '&type=longitude');
+        }
+    }
+    
+    function editOK(id, stopname, stoplat, stoplon) {
+        $('#editstop').load('controller.php?f=4&id=' + id + '&name=' + stopname + '&lat=' + stoplat + '&lon=' + stoplon);
+    }
+    
+    
 </script>

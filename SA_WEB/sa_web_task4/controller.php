@@ -2,6 +2,10 @@
     $function = $_GET["f"];
     
     switch ($function) {
+        case 0:
+            echo "";
+            break;
+        
         case 1:
             $name = $_GET["name"];
             $lat = $_GET["latvalue"];
@@ -85,8 +89,9 @@
             
             $befehl = $db->query($sql);
             while($resultat = $befehl->fetch_object()) {
-                echo "<td><button onclick=\"editstop('" . $resultat->id . "', '" . $resultat->name . "', '" . $resultat->latitude
-                        . "', '" . $resultat->longitude . "')\">edit</button></td>";
+                echo "<td><button onclick=\"editstopname('" . $resultat->id . "', '" . $resultat->name . "')\">edit name</button>";
+                echo "<button onclick=\"editstoplat('" . $resultat->id . "', '" . $resultat->latitude . "')\">edit latitude</button>";
+                echo "<button onclick=\"editstoplon('" . $resultat->id . "', '" . $resultat->longitude . "')\">edit longitude</button></td>";
                 echo '<td>' . $resultat->name . '</td>';
                 echo '<td>' . $resultat->latitude . '</td>';
                 echo '<td>' . $resultat->longitude . '</td></tr>';
@@ -96,23 +101,45 @@
             
         case 3:
             $id = $_GET['id'];
+            $var = $_GET['var'];
+            $type = $_GET['type'];
+            
+            $db = new mysqli("localhost", "root", "", "sa_database");
+            if (mysqli_connect_errno()) {
+                printf("Connection failed: %s\n", mysqli_connect_error());
+                exit();
+            }
+            
+            $sql = "UPDATE task1 SET " . mysqli_real_escape_string($db, $type) . "='" . mysqli_real_escape_string($db, $var); 
+            $sql .= "' WHERE id='" . mysqli_real_escape_string($db, $id) . "'";
+                        
+            $befehl = $db->query($sql);
+            $db->close();
+            break;
+        
+        case 4:
+            $id = $_GET['id'];
             $stop = $_GET['name'];
             $lat = $_GET['lat'];
             $lon = $_GET['lon'];
-            $ok = 1;
             
-            while($ok) {
-                echo '<form method="GET">';
-                echo '<a>Stopname:</a>';
-                echo '<input type="text" id="name" value="' . $stop . '"><br>';
-                echo '<a>Latitude:</a>';
-                echo '<input type="text" id="name" value="' . $lat . '"><br>';
-                echo '<a>Longitude:</a>';
-                echo '<input type="text" id="name" value="' . $lon . '"><br>';
-                echo '</form>';
-                break;
-               
+            $db = new mysqli("localhost", "root", "", "sa_database");
+            if (mysqli_connect_errno()) {
+                printf("Connection failed: %s\n", mysqli_connect_error());
+                exit();
             }
-              
+            
+            $sql = "UPDATE task1 SET name='" . mysqli_real_escape_string($db, $stop) . "', latitude='" ;
+            $sql .= mysqli_real_escape_string($db, $lat) . "', longitude='" . mysqli_real_escape_string($db, $lon);
+            $sql .= "' WHERE id='" . mysqli_real_escape_string($db, $id) . "'";
+            
+            echo $sql;
+            
+            
             break;
     }
+
+?>
+
+
+
