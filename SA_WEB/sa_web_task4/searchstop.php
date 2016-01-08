@@ -50,9 +50,9 @@ and open the template in the editor.
 
 <script>
  
-        document.getElementById('stopname').addEventListener("keypress", getstops);
-        document.getElementById('latvalue').addEventListener("keypress", getstops);
-        document.getElementById('lonvalue').addEventListener("keypress", getstops);
+        document.getElementById('stopname').addEventListener("keydown", getstops);
+        document.getElementById('latvalue').addEventListener("keydown", getstops);
+        document.getElementById('lonvalue').addEventListener("keydown", getstops);
         document.getElementsByName('lattype')[0].addEventListener("click", getstops);
         document.getElementsByName('lattype')[1].addEventListener("click", getstops);
         document.getElementsByName('lattype')[2].addEventListener("click", getstops);

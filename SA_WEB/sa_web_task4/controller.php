@@ -65,17 +65,16 @@
             echo '<th>Latitude</th>';
             echo '<th>Longitude</th></tr>';
             
-            $superstring = "";
+            $superstring = '<script type="text/javascript"> 
+                var map;
+                function initMap() {';
             
             if($resultat = $befehl->fetch_object()) {
                 echo '<tr><td>' . $resultat->name . '</td>';
                 echo '<td>' . $resultat->latitude . '</td>';
                 echo '<td>' . $resultat->longitude . '</td></tr>';
                 
-                $superstring .= '<script type="text/javascript"> 
-                var map;
-                function initMap() {
-                
+                $superstring .= '
                 map = new google.maps.Map(document.getElementById("map"), {
                     center: {lat: ' . $resultat->latitude . ', lng: ' . $resultat->longitude . '},
                     zoom: 13
@@ -87,6 +86,12 @@
                     title: "' . $resultat->name . 
                 '"});';
                 
+            }
+            else {
+                $superstring .= 'map = new google.maps.Map(document.getElementById("map"), {
+                    center: {lat: 47.0674802, lng: 15.4425893},
+                    zoom: 13
+                });';
             }
             
             
@@ -198,6 +203,14 @@
             $lat = $result->latitude;
             $lon = $result->longitude;
             
+            $superrest = '<script type="text/javascript"> 
+                var map;
+                function initMap() {
+                    map = new google.maps.Map(document.getElementById("map"), {
+                    center: {lat: ' . $result->latitude . ', lng: ' . $result->longitude . '},
+                    zoom: 17
+                });';
+            
             $sql = "SELECT * FROM task2 WHERE ";
             $sql .= "longitude < " . ($lon + $distance/(111111 * cos($lat * (180/M_PI)))) . " AND ";
             $sql .= "longitude > " . ($lon - $distance/(111111 * cos($lat * (180/M_PI)))) . " AND ";
@@ -207,13 +220,26 @@
             $befehl = $db->query($sql);
 
             echo '<table class="data">';
-            echo "<tr><th>Name</th><th>Type</th></tr>";
+            echo "<tr><th>Name</th><th>Type</th></tr>";            
             
             while($result = $befehl->fetch_object()) {
                 echo "<tr><td>" . $result->name . "</td>";
                 echo "<td>" . $result->amenity . "</td></tr>";
+                
+                $superrest .= 'new google.maps.Marker({
+                position: {lat: ' . $result->latitude . ', lng: ' . $result->longitude . '},
+                map: map,
+                title: "' . $result->name . 
+                '"});';
             } 
             echo "</table>";
+            
+            $superrest .= '}
+                </script>
+                <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKdI4C7gQzK9jZi9Po9BZaBKwSe1FTcZE&callback=initMap">
+                </script>';
+            echo $superrest;
                 
             $db->close();
             
