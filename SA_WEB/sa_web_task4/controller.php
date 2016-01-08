@@ -78,26 +78,44 @@
             }
             $sql = "SELECT * FROM task1 where name LIKE '%" . mysqli_real_escape_string($db, $name) . "%'";
 
-            echo '<table class="clickabletable>';
-            echo '<tr><th>Name</th>';
+            echo '<table class="clickabletable">';
+            echo '<tr><th></th><th>Name</th>';
             echo '<th>Latitude</th>';
             echo '<th>Longitude</th></tr>';
             
             $befehl = $db->query($sql);
             while($resultat = $befehl->fetch_object()) {
-               // echo '<tr><td><input type="button" name="stopid" onclick="editStopByID(' . $resultat->id . ')">edit';
+                echo "<td><button onclick=\"editstop('" . $resultat->id . "')\">edit</button></td>";
                 echo '<td>' . $resultat->name . '</td>';
                 echo '<td>' . $resultat->latitude . '</td>';
                 echo '<td>' . $resultat->longitude . '</td></tr>';
             }
             echo '</table>';
             break;
+            
+        case 3:
+            $id = $_GET['id'];
+            $stop = $_GET['name'];
+            $lat = $_GET['lat'];
+            $lon = $_GET['lon'];
+            $ok = 1;
+            
+            while($ok) {
+              echo '<form method="GET">';
+               
+            }
+              
+            break;
     }
 
 ?>
+<script>
 
-<sript>
-    function editStopByID(id) {
-        $('#test').alert("hello");
+    function editstop(id) {
+        var hello = prompt("hello", "du");
     }
+
 </script>
+
+
+

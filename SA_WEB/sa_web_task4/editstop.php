@@ -16,11 +16,13 @@ and open the template in the editor.
             <h1>Edit an Existing Stop</h1>
             
             <form method="get">
-                <input type="text" name="stopname">
+                <input type="text" name="stopname" id="123">
             </form> <!-- button wie input button value=stopid-->
             
         </div>
-        <div id="stops"><table class="clickabletable"></table></div>
+        
+        <div id="editstop"></div>
+        <div id="stops"></div>
     </body>
 </html>
 
@@ -33,19 +35,11 @@ and open the template in the editor.
             
             $('#stops').load('controller.php?f=2&name=' + name);
         }, 1000);
+        
                 
     });
-</script>
-<script type="text/javascript">
-    var RowClick = function() {
-        
-        $("#clickabletable").click(
-                alert('abc'); }
-                );
-        
-    }
-
-
-</script>
-
     
+    function editstop(id) {
+        $('#editstop').load('controller.php?f=3&id=' + id + '&name=' + stopname + '&lat=' + stoplat + '&lon=' + stoplon);
+    }
+</script>
