@@ -8,7 +8,7 @@
         <div class="main_window">
         <h1>Routenator</h1>
         
-        <form method="post" action="searchstop4.php">
+        <form method="post" action="searchstop.php">
             <input type="submit" value="Search Stop">
         </form>
         

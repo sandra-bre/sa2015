@@ -56,7 +56,7 @@ and open the template in the editor.
                 echo "<a>Adding " . $dest . " successfully.</a><br>";
             }
             
-            for($i = 0; $i < count($stops); $i++) {
+            for($i = 0; $i < count($stops) && !$stops; $i++) {
                 $sql =  "SELECT id FROM task1 where name='" . mysqli_real_escape_string($db, $stops[$i]) . "'";
                 $befehl = $db->query($sql);
                 $result = $befehl->fetch_object();
