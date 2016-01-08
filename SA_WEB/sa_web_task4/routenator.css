@@ -252,4 +252,26 @@ h1{
 	box-shadow: inset -1px -1px 0 #fff;
 }	
 
+.input_container input {
+	height: 20px;
+	width: 200px;
+	padding: 3px;
+	border: 1px solid #cccccc;
+	border-radius: 0;
+}
+.input_container ul {
+	width: 206px;
+	border: 1px solid #eaeaea;
+	z-index: 9;
+        margin-top: -4px;
+	background: #f3f3f3;
+	list-style: none!important;
+        color: black;
+}
+.input_container ul li {
+	padding: 2px;
+}
+.input_container ul li:hover {
+	background: gray;
+}
 

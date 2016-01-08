@@ -3,7 +3,7 @@
     
     switch ($function) {
         case 0:
-            echo "";
+            echo "testing...";
             break;
         
         case 1:
@@ -118,10 +118,7 @@
             break;
         
         case 4:
-            $id = $_GET['id'];
-            $stop = $_GET['name'];
-            $lat = $_GET['lat'];
-            $lon = $_GET['lon'];
+            $name = $_GET['name'];
             
             $db = new mysqli("localhost", "root", "", "sa_database");
             if (mysqli_connect_errno()) {
@@ -129,12 +126,128 @@
                 exit();
             }
             
-            $sql = "UPDATE task1 SET name='" . mysqli_real_escape_string($db, $stop) . "', latitude='" ;
-            $sql .= mysqli_real_escape_string($db, $lat) . "', longitude='" . mysqli_real_escape_string($db, $lon);
-            $sql .= "' WHERE id='" . mysqli_real_escape_string($db, $id) . "'";
+            $sql = "SELECT distinct name FROM task1 where upper(name) LIKE '" . mysqli_real_escape_string($db, $name) . "%' order by name ASC LIMIT 0, 5";
+            $befehl = $db->query($sql);
+            while($resultat = $befehl->fetch_object()) { 
+                echo '<li onclick="set_item(\''.str_replace("'", "\'", $resultat->name).'\')">'.$resultat->name.'</li>';
+            }
+            break;
             
-            echo $sql;
+        case 5:
+            $stop = $_GET["stopname"];
+            $distance = $_GET["distance"];
             
+            $db = new mysqli("localhost", "root", "", "sa_database");
+            if (mysqli_connect_errno()) {
+                printf("Connection failed: %s\n", mysqli_connect_error());
+                exit();
+            }
+            
+            $sql = "SELECT DISTINCT * FROM task1 WHERE name LIKE '%" . mysqli_real_escape_string($db, $stop) . "%'";
+            $befehl = $db->query($sql);
+                
+            if(!($result = $befehl->fetch_object())) {
+                echo "Unknown stopname.";
+                
+                echo '<div class="links1">';
+                echo '<a id="home" href="index.php">home</a>';
+                echo '<a id="back" href="searchrestaurant.php">back</a>';
+                echo '</div>';
+
+                exit;
+            }
+                
+            $stop = $result->name;
+            $lat = $result->latitude;
+            $lon = $result->longitude;
+            
+            $sql = "SELECT * FROM task2 WHERE ";
+            $sql .= "longitude < " . ($lon + $distance/(111111 * cos($lat * (180/M_PI)))) . " AND ";
+            $sql .= "longitude > " . ($lon - $distance/(111111 * cos($lat * (180/M_PI)))) . " AND ";
+            $sql .= "latitude < " . ($lat + $distance/111111) . " AND ";
+            $sql .= "latitude > " . ($lat - $distance/111111) . " ORDER BY name";
+            
+            $befehl = $db->query($sql);
+
+            echo '<table class="data">';
+            echo "<tr><th>Name</th><th>Type</th></tr>";
+            
+            while($result = $befehl->fetch_object()) {
+                echo "<tr><td>" . $result->name . "</td>";
+                echo "<td>" . $result->amenity . "</td></tr>";
+            } 
+            echo "</table>";
+                
+            $db->close();
+            
+            break;
+            
+        case 6:
+            $name = $_GET['name'];
+            $start = $_GET['start'];
+            $dest = $_GET['dest'];
+            
+            $db = new mysqli("localhost", "root", "", "sa_database");
+            if (mysqli_connect_errno()) {
+                printf("Connection failed: %s\n", mysqli_connect_error());
+                exit();
+            }
+            
+            if($start != "") {
+                $sql = "SELECT DISTINCT name FROM task1 WHERE name LIKE '%" . mysqli_real_escape_string($db, $start) . "%'";
+                $befehl = $db->query($sql);
+                
+                if($result = $befehl->fetch_object()) {
+                    $start = $result->name;
+                }
+            }
+            if($dest != "") {
+                $sql = "SELECT DISTINCT name FROM task1 WHERE name LIKE '%" . mysqli_real_escape_string($db, $dest) . "%'";
+                $befehl = $db->query($sql);
+                
+                if($result = $befehl->fetch_object()) {
+                    $dest = $result->name;
+                }
+            }
+            
+            if($start == "" && $dest == "") {
+                $sql = "SELECT name, route_id FROM routes";
+            }
+            else if ($start != "" && $dest != "") {
+                $sql = "SELECT r.name, r.route_id FROM ((SELECT route_id, m.stop_id FROM task1 t2 INNER JOIN mapping m ON (t2.id = m.stop_id) ";
+                $sql .= "WHERE t2.name = '" . $start . "') t1 INNER JOIN (SELECT route_id FROM task1 t3 INNER JOIN mapping m ON ";
+                $sql .= "(t3.id = m.stop_id) WHERE t3.name = '" . $dest . "' ) t2 ON(t1.route_id = t2.route_id) ";
+                $sql .= "INNER JOIN routes r ON(r.route_id = t2.route_id))";
+            }
+            else {
+                $sql = "SELECT r.name, r.route_id FROM (SELECT route_id, m.stop_id FROM task1 t2 INNER JOIN mapping m ON (t2.id = m.stop_id) ";
+                $sql .= "WHERE t2.name = '";
+                if ($start == "") { $sql .= $dest; }
+                else { $sql .= $start; }
+                $sql .= "') t1 INNER JOIN routes r ON (r.route_id = t1.route_id)";
+            }
+            if($name != "") {
+                 $sql .= " WHERE name LIKE '%" . $name . "%'";
+            }
+                    
+            $befehl = $db->query($sql);
+            
+            echo '<table class="data"><tr><th>Edit</th><th>Name</th></tr>';
+            
+            while ($resultat = $befehl->fetch_object()) {
+                echo "<tr><td><button onclick=\"editroutename('" . $resultat->route_id . "', '" . $resultat->name . "')\">Name</button>";
+                echo "<button onclick=\"editroutestart('" . $resultat->route_id . "')\">Start</button>";
+                echo "<button onclick=\"editroutedest('" . $resultat->route_id . "')\">Destination</button>";
+                echo "<button onclick=\"editroutestops('" . $resultat->route_id . "')\">Stops</button></td>";
+                echo "<td>" . $resultat->name . "</td></tr>";
+            }
+            echo "</table>";
+            
+            $db->close();
+            
+            break;
+            
+        case 7:
             
             break;
     }

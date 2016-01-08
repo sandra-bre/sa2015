@@ -16,7 +16,7 @@ and open the template in the editor.
             <h1>Edit an Existing Stop</h1>
             
             <form method="get">
-                <input type="text" name="stopname" id="123">
+                <input type="text" name="stopname">
             </form> <!-- button wie input button value=stopid-->
             
         </div>
