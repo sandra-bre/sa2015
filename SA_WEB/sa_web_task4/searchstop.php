@@ -79,7 +79,7 @@ and open the template in the editor.
                 url += '&stopname=' + name;
             
             
-            $('#resultstops').load('controller.php?name=' + name + '&latvalue=' + lat + '&lattype=' + lattype
+            $('#resultstops').load('controller.php?f=1&name=' + name + '&latvalue=' + lat + '&lattype=' + lattype
                     + '&lonvalue=' + lon + '&lontype=' + lontype);
         }, 1000);
     });

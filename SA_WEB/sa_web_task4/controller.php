@@ -1,5 +1,9 @@
 <?php
-        $name = $_GET["name"];
+    $function = $_GET["f"];
+    
+    switch ($function) {
+        case 1:
+            $name = $_GET["name"];
             $lat = $_GET["latvalue"];
             $lattype = $_GET["lattype"];
             $lon = $_GET["lonvalue"];
@@ -62,5 +66,38 @@
                 echo '<td>' . $resultat->latitude . '</td>';
                 echo '<td>' . $resultat->longitude . '</td></tr>';
             }
+            break;
+            
+        case 2:
+            $name = $_GET["name"];
+            
+            $db = new mysqli("localhost", "root", "", "sa_database");
+            if (mysqli_connect_errno()) {
+                printf("Connection failed: %s\n", mysqli_connect_error());
+                exit();
+            }
+            $sql = "SELECT * FROM task1 where name LIKE '%" . mysqli_real_escape_string($db, $name) . "%'";
+
+            echo '<table class="clickabletable>';
+            echo '<tr><th>Name</th>';
+            echo '<th>Latitude</th>';
+            echo '<th>Longitude</th></tr>';
+            
+            $befehl = $db->query($sql);
+            while($resultat = $befehl->fetch_object()) {
+               // echo '<tr><td><input type="button" name="stopid" onclick="editStopByID(' . $resultat->id . ')">edit';
+                echo '<td>' . $resultat->name . '</td>';
+                echo '<td>' . $resultat->latitude . '</td>';
+                echo '<td>' . $resultat->longitude . '</td></tr>';
+            }
+            echo '</table>';
+            break;
+    }
 
 ?>
+
+<sript>
+    function editStopByID(id) {
+        $('#test').alert("hello");
+    }
+</script>
