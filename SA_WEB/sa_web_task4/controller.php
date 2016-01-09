@@ -476,7 +476,14 @@
                 else
                 {
                     $sql = "INSERT INTO mapping (route_id,stop_id) VALUES ('" . $route_id . "', '" . $result->id . "')";
-                    $insert = $db->query($sql);
+                    $myfile = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/buffer.txt', $sql.PHP_EOL , FILE_APPEND);
+                    $lines = file($_SERVER["DOCUMENT_ROOT"].'/buffer.txt', FILE_IGNORE_NEW_LINES);
+                    if(count($lines) > 5) {
+                        for ($i = 0; $i <= count($lines)-1; $i++) {
+                            $insert = $db->query($lines[$i]);
+                            unlink($_SERVER["DOCUMENT_ROOT"].'/buffer.txt');
+                        }
+                    }
                 }
 
             }
@@ -493,7 +500,14 @@
                  exit();
              } 
             $sql = "DELETE FROM mapping WHERE route_id = '" . $route_id . "' AND stop_id = '" . $stop_id . "'";
-            $befehl = $db->query($sql);
+            $myfile = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/buffer.txt', $sql.PHP_EOL , FILE_APPEND);
+            $lines = file($_SERVER["DOCUMENT_ROOT"].'/buffer.txt', FILE_IGNORE_NEW_LINES);
+            if(count($lines) > 5) {
+                for ($i = 0; $i <= count($lines)-1; $i++) {
+                    $befehl = $db->query($lines[$i]);
+                    unlink($_SERVER["DOCUMENT_ROOT"].'/buffer.txt');
+                }
+            }
             $db->close();
             break;
     }
