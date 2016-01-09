@@ -65,17 +65,16 @@
             echo '<th>Latitude</th>';
             echo '<th>Longitude</th></tr>';
             
-            $superstring = "";
+            $superstring = '<script type="text/javascript"> 
+                var map;
+                function initMap() {';
             
             if($resultat = $befehl->fetch_object()) {
                 echo '<tr><td>' . $resultat->name . '</td>';
                 echo '<td>' . $resultat->latitude . '</td>';
                 echo '<td>' . $resultat->longitude . '</td></tr>';
                 
-                $superstring .= '<script type="text/javascript"> 
-                var map;
-                function initMap() {
-                
+                $superstring .= '
                 map = new google.maps.Map(document.getElementById("map"), {
                     center: {lat: ' . $resultat->latitude . ', lng: ' . $resultat->longitude . '},
                     zoom: 13
