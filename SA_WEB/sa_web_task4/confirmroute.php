@@ -57,11 +57,11 @@ and open the template in the editor.
             
             $i = 0;
             $j = 0;
-            while($i < count($stops) && !$stops) {
+            
+            while($i < count($stops) && $stops) {
                 $sql = "SELECT DISTINCT name FROM task1 WHERE name LIKE '%" . mysqli_real_escape_string($db, trim($stops[$i])) . "%'";
                 $befehl = $db->query($sql);
-                $result = $befehl->fetch_object();
-                if($result) {
+                if($result = $befehl->fetch_object()) {
                     $sstops[$j] = $result->name; $j++;
                 }
                 $i++;

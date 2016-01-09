@@ -177,6 +177,12 @@ h1{
     font-family: Verdana, sans-serif;
 }
 
+h2{
+    font-weight: bold;
+    font-size: 0.75rem;
+    font-family: Verdana, sans-serif;
+}
+
 .main_window input[type="submit"]{
     display: flex;
     width: 10rem;
@@ -336,5 +342,11 @@ h1{
 }
 .input_container ul li:hover {
 	background: gray;
+}
+
+#addButton{
+    margin-left: 60px;
+    margin-bottom: 30px;
+    margin-top: 30px;
 }
 

@@ -387,8 +387,88 @@
                     if($db->query($sql) === true) { }
                     break;
             }
-                
-                
+            break;
+        
+        case 8:
+            $id = $_GET['id'];
+            $routename = $_GET['name'];
+            
+            echo "<h2>" . $routename . "</h2>";
+            $db = new mysqli("localhost", "root", "", "sa_database");
+            
+            if (mysqli_connect_errno()) {
+                 printf("Connection failed: %s\n", mysqli_connect_error());
+                 exit();
+             }
+            $sql = "SELECT r.route_id, t.* FROM task1 t INNER JOIN mapping m ON(t.id = m.stop_id)";
+            $sql .= " inner join routes r ON(m.route_id = r.route_id)";
+            $sql .= " where m.route_id = '" . $id . "'";
+           
+            $befehl = $db->query($sql);
+            $anz = $db->affected_rows;
+            $result1 = $befehl->fetch_object();
+            echo "<button id = 'addButton' onclick=\"addStop('" . $result1->route_id . "')\">Add Stop</button>";
+            echo '<table class="data">';
+            echo '<th>Delete</th>';
+            echo '<th>Name</th>';
+            $inn = 1;
+            while($result = $befehl->fetch_object()) {
+               if($inn < $anz or $inn > 1){
+                echo "<tr><td><button onclick=\"deleteStop('" . $result->route_id . "', '" . $result->id . "')\">Delete</button></td>";
+                echo "<td>" . $result->name . "</td></tr>";
+               }
+               $inn++;
+            } 
+            break;
+            
+        case 9:
+            $name = $_GET["name"];
+            $route_id = $_GET["route_id"];
+            $db = new mysqli("localhost", "root", "", "sa_database");
+
+            if (mysqli_connect_errno()) {
+                 printf("Connection failed: %s\n", mysqli_connect_error());
+                 exit();
+             }
+            $sql = "SELECT * FROM task1 t WHERE name LIKE '" . $name . "%'";
+
+            $befehl = $db->query($sql);
+
+            if($db->affected_rows <= 0){
+                echo '<script type="text/javascript" language="Javascript"> 
+                    alert("Haltestelle nicht gefunden.") 
+                    </script> ';
+            }
+            else
+            {   
+                $result = $befehl->fetch_object();
+                $sql = "SELECT * FROM mapping t WHERE route_id = '" . $route_id . "' and stop_id ='" . $result->id . "'";                
+                $befehl2 = $db->query($sql);
+                if($db->affected_rows > 0){
+                    echo '<script type="text/javascript" language="Javascript"> 
+                        alert("Haltestelle schon vorhanden.") 
+                        </script> ';
+                }
+                else
+                {
+                    $sql = "INSERT INTO mapping (route_id,stop_id) VALUES ('" . $route_id . "', '" . $result->id . "')";
+                    $insert = $db->query($sql);
+                }
+
+            }
+            break;
+            
+        case 10:
+            $stop_id = $_GET["stop_id"];
+            $route_id = $_GET["route_id"];
+            $db = new mysqli("localhost", "root", "", "sa_database");
+
+            if (mysqli_connect_errno()) {
+                 printf("Connection failed: %s\n", mysqli_connect_error());
+                 exit();
+             } 
+            $sql = "DELETE FROM mapping WHERE route_id = '" . $route_id . "' AND stop_id = '" . $stop_id . "'";
+            $befehl = $db->query($sql);
             break;
     }
 

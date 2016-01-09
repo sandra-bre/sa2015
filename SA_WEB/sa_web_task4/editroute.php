@@ -36,6 +36,7 @@ and open the template in the editor.
             
         </div>
         
+        <div id="updateStops"></div>
         <div id="edit"></div>
         <div id="route"></div>
     </body>
@@ -88,10 +89,18 @@ and open the template in the editor.
         $('#edit').load('controller.php?f=7&id=' + id + '&type=2' + '&old=' + stopsready + '&new=' + dest + '&name=' + name);
     }
     
-    function editroutestops(id) {
-        alert("id " + id);
+    function editroutestops(id, name) {
+        name = name.split(" ").join("+");
+        $('#updateStops').load('controller.php?f=8&id=' + id + '&name=' + name);
     }
     
+    function addStop(route_id){
+        var name = prompt("Stopname:");
+        $('#updateStops').load('controller.php?f=9&name=' + name+ '&route_id=' + route_id);
+    }
+    function deleteStop(route_id, stop_id){
+       $('#updateStops').load('controller.php?f=10&route_id=' + route_id + '&stop_id=' + stop_id);
+    }
     
 </script>
 
