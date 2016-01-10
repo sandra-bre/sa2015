@@ -149,8 +149,16 @@
             
             $sql = "UPDATE task1 SET " . mysqli_real_escape_string($db, $type) . "='" . mysqli_real_escape_string($db, $var); 
             $sql .= "' WHERE id='" . mysqli_real_escape_string($db, $id) . "'";
-                        
-            $befehl = $db->query($sql);
+
+            $myfile = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/buffer.txt', $sql.PHP_EOL , FILE_APPEND);
+            $lines = file($_SERVER["DOCUMENT_ROOT"].'/buffer.txt', FILE_IGNORE_NEW_LINES);
+            if(count($lines) > 5) {
+                for ($i = 0; $i <= count($lines)-1; $i++) {
+                    $befehl = $db->query($lines[$i]);
+                    unlink($_SERVER["DOCUMENT_ROOT"].'/buffer.txt');
+                }
+            }
+            
             $db->close();
             break;
         
@@ -322,7 +330,17 @@
                     $sql = "UPDATE routes SET name='" . mysqli_real_escape_string($db, $name); 
                     $sql .= "' WHERE route_id='" . mysqli_real_escape_string($db, $id) . "'";
                     
-                    $befehl = $db->query($sql);
+                    $myfile = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/buffer.txt', $sql.PHP_EOL , FILE_APPEND);
+                    $lines = file($_SERVER["DOCUMENT_ROOT"].'/buffer.txt', FILE_IGNORE_NEW_LINES);
+            
+                    if(count($lines) > 5) {
+                        for ($i = 0; $i <= count($lines)-1; $i++) {
+                            $befehl = $db->query($lines[$i]);
+
+                            unlink($_SERVER["DOCUMENT_ROOT"].'/buffer.txt');
+                        }
+                    }                  
+                   
                     $db->close();
                     
                     break;
@@ -393,8 +411,18 @@
             $id = $_GET['id'];
             $routename = $_GET['name'];
             
-            echo "<h2>" . $routename . "</h2>";
+            $tmp = explode(": ", $routename);
+            $tmp1 = explode(" => ", $tmp[1]);
+
             $db = new mysqli("localhost", "root", "", "sa_database");
+            
+            $sql = "SELECT * FROM task1 where name LIKE '" . $tmp1[0] . "'";
+            $befehl1 = $db->query($sql);
+            
+            $result2 = $befehl1->fetch_object();
+            $sql = "SELECT * FROM task1 where name LIKE '" . $tmp1[1] . "'";
+            $befehl2 = $db->query($sql);
+            $result3 = $befehl2->fetch_object();
             
             if (mysqli_connect_errno()) {
                  printf("Connection failed: %s\n", mysqli_connect_error());
@@ -402,23 +430,20 @@
              }
             $sql = "SELECT r.route_id, t.* FROM task1 t INNER JOIN mapping m ON(t.id = m.stop_id)";
             $sql .= " inner join routes r ON(m.route_id = r.route_id)";
-            $sql .= " where m.route_id = '" . $id . "'";
+            $sql .= " where m.route_id = '" . $id . "' and t.id != '" . $result2->id . "' and t.id !=" .$result3->id; //and t.id != '" . $id . "'" and t.id!='" . $id . "'";
            
             $befehl = $db->query($sql);
-            $anz = $db->affected_rows;
             $result1 = $befehl->fetch_object();
-            echo "<button id = 'addButton' onclick=\"addStop('" . $result1->route_id . "')\">Add Stop</button>";
+            echo "<button id = 'addButton' onclick=\"addStop('" . $id . "')\">Add Stop</button>";
             echo '<table class="data">';
             echo '<th>Delete</th>';
             echo '<th>Name</th>';
-            $inn = 1;
+
             while($result = $befehl->fetch_object()) {
-               if($inn < $anz or $inn > 1){
                 echo "<tr><td><button onclick=\"deleteStop('" . $result->route_id . "', '" . $result->id . "')\">Delete</button></td>";
                 echo "<td>" . $result->name . "</td></tr>";
-               }
-               $inn++;
             } 
+            $db->close();
             break;
             
         case 9:
@@ -456,6 +481,7 @@
                 }
 
             }
+            $db->close();
             break;
             
         case 10:
@@ -469,6 +495,7 @@
              } 
             $sql = "DELETE FROM mapping WHERE route_id = '" . $route_id . "' AND stop_id = '" . $stop_id . "'";
             $befehl = $db->query($sql);
+            $db->close();
             break;
     }
 
