@@ -28,6 +28,6 @@ and open the template in the editor.
         
         
         <a id="home" href="index.php">home</a>
-        <div>
+        </div>
     </body>
 </html>

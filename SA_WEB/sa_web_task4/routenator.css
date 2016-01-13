@@ -72,7 +72,7 @@ html, body {
 .search_bar{
     display: flex;
     width: 100%;
-    min-width: 20rem;
+    min-width: 70rem;
     justify-content: space-around;
     flex-flow: row nowrap;
     align-items: flex-start;
@@ -104,6 +104,7 @@ html, body {
 
 .clickabletable{
     border-collapse: collapse;
+    width:  70rem;
 }
 
 .clickabletable td {
@@ -122,7 +123,7 @@ html, body {
 
 .clickabletable2{
     border-collapse: collapse;
-    width: 90%;
+    width: 70rem;
     margin-left: auto;
     margin-right: auto;
     margin-top: 1.5rem;
@@ -166,9 +167,10 @@ html, body {
     width: 100%;
     justify-content: space-around;
     flex-flow: column nowrap;
-    align-items: flex-start;
+    align-items: center;
     align-content: center;
     background-color: #EEE;
+    height: auto;
 }
 
 h1{

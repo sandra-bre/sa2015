@@ -32,6 +32,7 @@ and open the template in the editor.
         setInterval(function()
         {
             var name = document.getElementsByName('stopname')[0].value;          
+            name = name.split(" ").join("+");
             
             $('#stops').load('controller.php?f=2&name=' + name);
         }, 1000);
@@ -40,7 +41,7 @@ and open the template in the editor.
     
     function editstopname(id, stopname) {
         var name = prompt("Stopname:", stopname);
-        name = name.replace(" ", "+");
+        name = name.split(" ").join("+");
         $('#editstop').load('controller.php?f=3&id=' + id + '&var=' + name + '&type=name');
     }
     

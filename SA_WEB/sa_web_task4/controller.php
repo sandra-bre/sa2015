@@ -1,12 +1,9 @@
 <?php
     $function = $_GET["f"];
     
-    switch ($function) {
-        case 0:
-            echo "testing...";
-            break;
-        
-        case 1: //searchstop - search stops and display map
+    switch ($function) {        
+        //searchstop - search stops and display map
+        case 1:
             $name = $_GET["name"];
             $lat = $_GET["latvalue"];
             $lattype = $_GET["lattype"];
@@ -19,8 +16,8 @@
             $lat = str_replace(",", ".", $lat);
             $lon = str_replace(",", ".", $lon);
             
-            if(((!is_numeric($lat) && !is_float($lat) && is_null($lat))) 
-                    || ((!is_numeric($lon) && !is_float($lon)) && is_null($lon))) {
+            if(((!is_numeric($lat) && !is_float($lat) && !is_null($lat))) 
+                    || ((!is_numeric($lon) && !is_float($lon)) && !is_null($lon))) {
                 echo "Latitude and Longitude must be numbers.";
                 exit;
             }
@@ -108,7 +105,8 @@
             echo $superstring;
             break;
             
-        case 2: //editstop - search stops
+        //editstop - search stops    
+        case 2:
             $name = $_GET["name"];
             
             $db = new mysqli("localhost", "root", "", "sa_database");
@@ -134,8 +132,9 @@
             }
             echo '</table>';
             break;
-            
-        case 3: //editstop - update database
+        
+        //editstop - update database
+        case 3: 
             $id = $_GET['id'];
             $var = $_GET['var'];
             $type = $_GET['type'];
@@ -148,20 +147,22 @@
             
             $sql = "UPDATE task1 SET " . mysqli_real_escape_string($db, $type) . "='" . mysqli_real_escape_string($db, $var); 
             $sql .= "' WHERE id='" . mysqli_real_escape_string($db, $id) . "'";
-
+            
             $myfile = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/buffer.txt', $sql.PHP_EOL , FILE_APPEND);
             $lines = file($_SERVER["DOCUMENT_ROOT"].'/buffer.txt', FILE_IGNORE_NEW_LINES);
-            if(count($lines) > 5) {
+            if(count($lines) > 1) {
                 for ($i = 0; $i <= count($lines)-1; $i++) {
                     $befehl = $db->query($lines[$i]);
-                    unlink($_SERVER["DOCUMENT_ROOT"].'/buffer.txt');
+                    
                 }
+                unlink($_SERVER["DOCUMENT_ROOT"].'/buffer.txt');
             }
             
             $db->close();
             break;
         
-        case 4: //editstop - dropdown
+        //searchrestaurant - dropdown
+        case 4: 
             $name = $_GET['name'];
             
             $db = new mysqli("localhost", "root", "", "sa_database");
@@ -176,8 +177,9 @@
                 echo '<li onclick="set_item(\''.str_replace("'", "\'", $resultat->name).'\')">'.$resultat->name.'</li>';
             }
             break;
-            
-        case 5: //search restaurant - search restaurants
+        
+        //search restaurant - search restaurants
+        case 5: 
             $stop = $_GET["stopname"];
             $distance = $_GET["distance"];
             
@@ -213,12 +215,17 @@
                     zoom: 17
                 });';
             
+            $berechnung = $distance/(111111 * cos($lat * (180/M_PI)));
+            
+            if($berechnung < 0) {
+                $berechnung = $berechnung * -1;
+            }
+            
             $sql = "SELECT * FROM task2 WHERE ";
-            $sql .= "longitude < " . ($lon + $distance/(111111 * cos($lat * (180/M_PI)))) . " AND ";
-            $sql .= "longitude > " . ($lon - $distance/(111111 * cos($lat * (180/M_PI)))) . " AND ";
+            $sql .= "longitude < " . ($lon + $berechnung) . " AND ";
+            $sql .= "longitude > " . ($lon - $berechnung) . " AND ";
             $sql .= "latitude < " . ($lat + $distance/111111) . " AND ";
             $sql .= "latitude > " . ($lat - $distance/111111) . " ORDER BY name";
-            
             $befehl = $db->query($sql);
 
             echo '<table class="data">';
@@ -246,8 +253,9 @@
             $db->close();
             
             break;
-            
-        case 6: //editroute - search route
+        
+        //editroute - search route    
+        case 6: 
             $name = $_GET['name'];
             $start = $_GET['start'];
             $dest = $_GET['dest'];
@@ -311,8 +319,9 @@
             $db->close();
             
             break;
-            
-        case 7: //editroute - update database
+         
+        //editroute - update database (name, start, dest)
+        case 7: 
             $type = $_GET['type'];
             $id = $_GET['id'];
             
@@ -332,12 +341,13 @@
                     $myfile = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/buffer.txt', $sql.PHP_EOL , FILE_APPEND);
                     $lines = file($_SERVER["DOCUMENT_ROOT"].'/buffer.txt', FILE_IGNORE_NEW_LINES);
             
-                    if(count($lines) > 5) {
+                    if(count($lines) > 1) {
                         for ($i = 0; $i <= count($lines)-1; $i++) {
                             $befehl = $db->query($lines[$i]);
 
-                            unlink($_SERVER["DOCUMENT_ROOT"].'/buffer.txt');
+                            
                         }
+                        unlink($_SERVER["DOCUMENT_ROOT"].'/buffer.txt');
                     }                  
                    
                     $db->close();
@@ -406,6 +416,7 @@
             }
             break;
         
+        //editroute - display stops    
         case 8:
             $id = $_GET['id'];
             $routename = $_GET['name'];
@@ -434,7 +445,7 @@
             $befehl = $db->query($sql);
             $result1 = $befehl->fetch_object();
             echo "<button id = 'addButton' onclick=\"addStop('" . $id . "')\">Add Stop</button>";
-            echo '<table class="data">';
+            echo '<table class="clickabletable2">';
             echo '<th>Delete</th>';
             echo '<th>Name</th>';
 
@@ -444,7 +455,8 @@
             } 
             $db->close();
             break;
-            
+         
+        //editroute - add stops
         case 9:
             $name = $_GET["name"];
             $route_id = $_GET["route_id"];
@@ -455,10 +467,11 @@
                  exit();
              }
             $sql = "SELECT * FROM task1 t WHERE name LIKE '" . $name . "%'";
-
+            echo $sql;
             $befehl = $db->query($sql);
 
             if($db->affected_rows <= 0){
+                
                 echo '<script type="text/javascript" language="Javascript"> 
                     alert("Haltestelle nicht gefunden.") 
                     </script> ';
@@ -478,18 +491,20 @@
                     $sql = "INSERT INTO mapping (route_id,stop_id) VALUES ('" . $route_id . "', '" . $result->id . "')";
                     $myfile = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/buffer.txt', $sql.PHP_EOL , FILE_APPEND);
                     $lines = file($_SERVER["DOCUMENT_ROOT"].'/buffer.txt', FILE_IGNORE_NEW_LINES);
-                    if(count($lines) > 5) {
+                    if(count($lines) > 1) {
                         for ($i = 0; $i <= count($lines)-1; $i++) {
                             $insert = $db->query($lines[$i]);
-                            unlink($_SERVER["DOCUMENT_ROOT"].'/buffer.txt');
+                            
                         }
+                        unlink($_SERVER["DOCUMENT_ROOT"].'/buffer.txt');
                     }
                 }
 
             }
             $db->close();
             break;
-            
+         
+        //editroute - delete stops
         case 10:
             $stop_id = $_GET["stop_id"];
             $route_id = $_GET["route_id"];
@@ -502,11 +517,12 @@
             $sql = "DELETE FROM mapping WHERE route_id = '" . $route_id . "' AND stop_id = '" . $stop_id . "'";
             $myfile = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/buffer.txt', $sql.PHP_EOL , FILE_APPEND);
             $lines = file($_SERVER["DOCUMENT_ROOT"].'/buffer.txt', FILE_IGNORE_NEW_LINES);
-            if(count($lines) > 5) {
+            if(count($lines) > 1) {
                 for ($i = 0; $i <= count($lines)-1; $i++) {
                     $befehl = $db->query($lines[$i]);
-                    unlink($_SERVER["DOCUMENT_ROOT"].'/buffer.txt');
+                    
                 }
+                unlink($_SERVER["DOCUMENT_ROOT"].'/buffer.txt');
             }
             $db->close();
             break;

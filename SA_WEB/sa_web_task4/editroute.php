@@ -34,8 +34,6 @@ and open the template in the editor.
                 </div>
             </form>
             
-        </div>
-        
         <div id="updateStops"></div>
         <div id="edit"></div>
         <div id="route"></div>
@@ -50,7 +48,9 @@ and open the template in the editor.
             var name = document.getElementById('routename').value;
             var start = document.getElementById('start').value;
             var dest = document.getElementById('dest').value;
-            
+            name = name.split(" ").join("+");
+            start = start.split(" ").join("+");
+            dest = dest.split(" ").join("+");
             if(name != "" || start != "" || dest != "") {
                 $('#route').load('controller.php?f=6&name=' + name + '&start=' + start + '&dest=' + dest);
             }
@@ -96,6 +96,7 @@ and open the template in the editor.
     
     function addStop(route_id){
         var name = prompt("Stopname:");
+        name = name.split(" ").join("+");
         $('#updateStops').load('controller.php?f=9&name=' + name+ '&route_id=' + route_id);
     }
     function deleteStop(route_id, stop_id){

@@ -73,9 +73,15 @@ and open the template in the editor.
             echo '<a id="back" href="searchrestaurant.php">back</a>';
             echo '</div>';
             
+            $berechnung = $distance/(111111 * cos($lat * (180/M_PI)));
+            
+            if($berechnung < 0) {
+                $berechnung = $berechnung * -1;
+            }
+            
             $sql = "SELECT * FROM task2 WHERE ";
-            $sql .= "longitude < " . ($lon + $distance/(111111 * cos($lat * (180/M_PI)))) . " AND ";
-            $sql .= "longitude > " . ($lon - $distance/(111111 * cos($lat * (180/M_PI)))) . " AND ";
+            $sql .= "longitude < " . ($lon + $berechnung) . " AND ";
+            $sql .= "longitude > " . ($lon - $berechnung) . " AND ";
             $sql .= "latitude < " . ($lat + $distance/111111) . " AND ";
             $sql .= "latitude > " . ($lat - $distance/111111) . " ORDER BY name";
             

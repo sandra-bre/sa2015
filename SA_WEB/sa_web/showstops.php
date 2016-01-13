@@ -29,8 +29,8 @@
             $lat = str_replace(",", ".", $lat);
             $lon = str_replace(",", ".", $lon);
             
-            if(((!is_numeric($lat) && !is_float($lat) && is_null($lat))) 
-                    || ((!is_numeric($lon) && !is_float($lon)) && is_null($lon))) {
+            if(((!is_numeric($lat) && !is_float($lat) && !is_null($lat))) 
+                    || ((!is_numeric($lon) && !is_float($lon)) && !is_null($lon))) {
                 echo "Latitude and Longitude must be numbers.";
                 
                 echo '<div class="links1">';
@@ -101,10 +101,6 @@
             echo '<a id="back" href="searchstop.php">back</a>';
             echo '</div>';
             
-            
-        ?>
-        
-        <?php
             $befehl = $db->query($sql);
             
             echo '<table class="data">';

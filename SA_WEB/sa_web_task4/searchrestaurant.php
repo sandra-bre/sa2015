@@ -41,36 +41,38 @@ and open the template in the editor.
         <div id="results"></div>
         <div id="map"></div>
     </body>
+    
+    <script type="text/javascript">
+        document.getElementById('stopname').addEventListener("keydown", holeDaten);
+
+        function holeDaten(){
+            var name = document.getElementById('stopname').value;
+            name = name.split(" ").join("+");
+            if(name != ""){
+                $('#stopnameList').load('controller.php?f=4&name=' + name);
+            }
+        }
+
+        function set_item(item) {
+            $('#stopname').val(item);
+        }
+
+        function getdata() {
+            var name = document.getElementById('stopname').value;
+            var distance = document.getElementsByName('distance')[0].value;
+            name = name.split(" ").join("+");
+            distance = distance.replace(",", ".");
+            if(name == "" || distance == "") {
+                alert("Please enter name and distance.")
+            }        
+            else if(isNaN(distance)) {
+                alert("Distance must be a number.");
+            }
+            else {
+                $('#results').load('controller.php?f=5&stopname=' + name + '&distance=' + distance);
+            }
+        }
+    </script>
+    
 </html>
 
-
-<script>
-    document.getElementById('stopname').addEventListener("keydown", holeDaten);
-    
-    function holeDaten(){
-        var name = document.getElementById('stopname').value;
-        if(name != ""){
-            $('#stopnameList').load('controller.php?f=4&name=' + name);
-        }
-    }
-    
-    function set_item(item) {
-	$('#stopname').val(item);
-    }
-    
-    function getdata() {
-        var name = document.getElementById('stopname').value;
-        var distance = document.getElementsByName('distance')[0].value;
-        
-        distance = distance.replace(",", ".");
-        if(name == "" || distance == "") {
-            alert("Please enter name and distance.")
-        }        
-        else if(isNaN(distance)) {
-            alert("Distance must be a number.");
-        }
-        else {
-            $('#results').load('controller.php?f=5&stopname=' + name + '&distance=' + distance);
-        }
-    }
-</script>

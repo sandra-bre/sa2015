@@ -67,7 +67,7 @@ and open the template in the editor.
         <a id="back" href="searchconnection.php">back</a>
         <a id="home" href="index.php">home</a>
         </div>
-		
+                  
         <?php    
             $sql = "SELECT r.name FROM (SELECT route_id, m.stop_id ";
             $sql .= "FROM task1 t2 INNER JOIN mapping m ON (t2.id = m.stop_id) ";

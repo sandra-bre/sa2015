@@ -59,8 +59,10 @@ and open the template in the editor.
         document.getElementsByName('lontype')[0].addEventListener("click", getstops);
         document.getElementsByName('lontype')[1].addEventListener("click", getstops);
         document.getElementsByName('lontype')[2].addEventListener("click", getstops);
+        
     function getstops()  {
             var name = document.getElementById('stopname').value;
+            name = name.split(" ").join("+");
             var lat = document.getElementById('latvalue').value;
             var lattype;
             if (document.getElementsByName('lattype')[0].checked == true) {
